@@ -14,13 +14,10 @@ class MAGICWARPROJECT_API UUUiUserWidget : public UUserWidget
 {
 	GENERATED_BODY()
 
-public:
-
-	
-
 protected:
 
+
 	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
-	class UProgressBar* ProgessBar_Health;
+	class UProgressBar* ProgressBar_Health;
 	
 };

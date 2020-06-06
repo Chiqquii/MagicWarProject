@@ -6,7 +6,7 @@
 // Sets default values
 AAPlayerCharacter::AAPlayerCharacter()
 {
- 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
 }
@@ -15,7 +15,9 @@ AAPlayerCharacter::AAPlayerCharacter()
 void AAPlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	health = MaxHealth;
+
 }
 
 // Called every frame
@@ -30,7 +32,12 @@ void AAPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
-	
+	PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &AAPlayerCharacter::Shoot);
 
+}
+
+void AAPlayerCharacter::Shoot()
+{
+	health -= 10;
 }
 

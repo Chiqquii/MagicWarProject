@@ -11,18 +11,22 @@ class MAGICWARPROJECT_API AAPlayerCharacter : public ACharacter
 {
 	GENERATED_BODY()
 
+
 public:
 	// Sets default values for this character's properties
 	AAPlayerCharacter();
 
-	UPROPERTY(EditAnywhere, Category = "Character Variables")
-	float health;
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	UPROPERTY(BlueprintReadOnly, EditAnywhere)
+		float health;
 	
+	UPROPERTY(BlueprintReadOnly, EditAnywhere)
+		float MaxHealth;
+
 
 public:	
 	// Called every frame
@@ -31,4 +35,5 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	void Shoot();
 };
