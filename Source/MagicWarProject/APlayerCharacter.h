@@ -21,11 +21,15 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	UPROPERTY(BlueprintReadOnly, EditAnywhere)
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		float health;
 	
-	UPROPERTY(BlueprintReadOnly, EditAnywhere)
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		float MaxHealth;
+
+	UPROPERTY(BlueprintReadWrite,EditAnywhere)
+		float Speed;
+
 
 
 public:	
@@ -36,4 +40,8 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	void Shoot();
+	void TakeDamage();
+	void MoveForward(float Axis);
+	void MoveRight(float Axis);
+	void CameraRotation(float Axis);
 };

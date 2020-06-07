@@ -2,6 +2,8 @@
 
 
 #include "APlayerCharacter.h"
+#include "DrawDebugHelpers.h"
+#include "CollisionQueryParams.h"
 
 // Sets default values
 AAPlayerCharacter::AAPlayerCharacter()
@@ -15,6 +17,8 @@ AAPlayerCharacter::AAPlayerCharacter()
 void AAPlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+
+	MaxHealth = 100;
 
 	health = MaxHealth;
 
@@ -34,10 +38,46 @@ void AAPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 
 	PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &AAPlayerCharacter::Shoot);
 
+	PlayerInputComponent->BindAxis("MoveForward", this, &AAPlayerCharacter::MoveForward);
+	PlayerInputComponent->BindAxis("MoveRight", this, &AAPlayerCharacter::MoveRight);
+	PlayerInputComponent->BindAxis("Turn", this, &AAPlayerCharacter::CameraRotation);
+
 }
 
 void AAPlayerCharacter::Shoot()
 {
-	health -= 10;
+	FCollisionQueryParams* QueryParams = new FCollisionQueryParams();
+	QueryParams->AddIgnoredActor(GetOwner());
+	QueryParams->AddIgnoredActor(this);
+	QueryParams->bTraceComplex = true;//Lo vamos a usar para saber donde le pegamos y poder hacer lo de los puntos;
+	FHitResult hit;
+
+	if (GetWorld()->LineTraceSingleByChannel(hit, GetActorLocation(), GetActorForwardVector() * 10000, ECC_Visibility))
+	{
+		health -= 10;
+	}
+
+
+	DrawDebugLine(GetWorld(), GetActorLocation(), GetActorForwardVector() * 10000, FColor::Green, 1.0f, 0, 1.0f);
+}
+
+void AAPlayerCharacter::TakeDamage()
+{
+
+}
+
+void AAPlayerCharacter::MoveForward(float Axis)
+{
+	AddMovementInput(GetActorForwardVector(), Axis);
+}
+
+void AAPlayerCharacter::MoveRight(float Axis)
+{
+	AddMovementInput(GetActorRightVector(), Axis);
+}
+
+void AAPlayerCharacter::CameraRotation(float Axis)
+{
+	AddControllerYawInput(Axis);
 }
 
