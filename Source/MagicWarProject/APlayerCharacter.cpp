@@ -2,8 +2,6 @@
 
 
 #include "APlayerCharacter.h"
-#include "DrawDebugHelpers.h"
-#include "CollisionQueryParams.h"
 
 // Sets default values
 AAPlayerCharacter::AAPlayerCharacter()
@@ -46,19 +44,10 @@ void AAPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 
 void AAPlayerCharacter::Shoot()
 {
-	FCollisionQueryParams* QueryParams = new FCollisionQueryParams();
-	QueryParams->AddIgnoredActor(GetOwner());
-	QueryParams->AddIgnoredActor(this);
-	QueryParams->bTraceComplex = true;//Lo vamos a usar para saber donde le pegamos y poder hacer lo de los puntos;
-	FHitResult hit;
-
-	if (GetWorld()->LineTraceSingleByChannel(hit, GetActorLocation(), GetActorForwardVector() * 10000, ECC_Visibility))
+	if (ProjectileClass != NULL)
 	{
-		health -= 10;
+		GetWorld()->SpawnActor<AProjectile>(ProjectileClass, GetActorLocation() + GetActorForwardVector(), GetActorRotation());
 	}
-
-
-	DrawDebugLine(GetWorld(), GetActorLocation(), GetActorForwardVector() * 10000, FColor::Green, 1.0f, 0, 1.0f);
 }
 
 void AAPlayerCharacter::TakeDamage()

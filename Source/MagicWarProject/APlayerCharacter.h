@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "Projectile.h"
 #include "APlayerCharacter.generated.h"
 
 UCLASS()
@@ -23,16 +24,17 @@ protected:
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		float health;
-	
+
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		float MaxHealth;
 
-	UPROPERTY(BlueprintReadWrite,EditAnywhere)
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		float Speed;
 
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		TSubclassOf<class AProjectile> ProjectileClass;
 
-
-public:	
+public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
