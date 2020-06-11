@@ -23,10 +23,6 @@ void AProjectile::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-// 	FVector Dir = GetActorForwardVector() * 2 * GetWorld()->GetDeltaSeconds();
-// 
-// 	SetActorLocation(GetActorLocation() * Dir);
-
 	FVector Location = GetActorLocation();
 
 	Location += GetActorForwardVector() * Speed * DeltaTime;
