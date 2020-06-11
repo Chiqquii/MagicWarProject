@@ -16,10 +16,13 @@ void AAPlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
-	MaxHealth = 100;
-
 	health = MaxHealth;
 
+	if (skins.Num() > 0) 
+	{
+		auto randomSkin = FMath::RandRange(0, skins.Num());
+		GetMesh()->SetSkeletalMesh(skins[randomSkin]);
+	}
 }
 
 // Called every frame
@@ -46,7 +49,7 @@ void AAPlayerCharacter::Shoot()
 {
 	if (ProjectileClass != NULL)
 	{
-		GetWorld()->SpawnActor<AProjectile>(ProjectileClass, GetActorLocation() + GetActorForwardVector(), GetActorRotation());
+		GetWorld()->SpawnActor<AProjectile>(ProjectileClass, GetActorLocation() + GetActorForwardVector() * DistSpawnBullet, GetActorRotation());
 	}
 }
 

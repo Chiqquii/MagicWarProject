@@ -17,7 +17,6 @@ public:
 	// Sets default values for this character's properties
 	AAPlayerCharacter();
 
-
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -32,9 +31,19 @@ protected:
 		float Speed;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		float DistSpawnBullet;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		TSubclassOf<class AProjectile> ProjectileClass;
 
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		int numberSkin;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		TArray<USkeletalMesh*> skins;
+
 public:
+
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 

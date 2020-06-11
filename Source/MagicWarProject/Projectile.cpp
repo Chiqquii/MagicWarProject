@@ -23,8 +23,24 @@ void AProjectile::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	FVector Dir = GetActorForwardVector() * 2 * GetWorld()->GetDeltaSeconds();
+// 	FVector Dir = GetActorForwardVector() * 2 * GetWorld()->GetDeltaSeconds();
+// 
+// 	SetActorLocation(GetActorLocation() * Dir);
 
-	SetActorLocation(GetActorLocation() * Dir);
+	FVector Location = GetActorLocation();
+
+	Location += GetActorForwardVector() * Speed * DeltaTime;
+
+	SetActorLocation(Location);
+
+	_TimerLife += DeltaTime;
+
+	if (_TimerLife >= TimeLife)
+		DestroyBullet();
+}
+
+void AProjectile::DestroyBullet() 
+{
+	Destroy(true);
 }
 
