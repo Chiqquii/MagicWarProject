@@ -40,9 +40,9 @@ void AProjectile::DestroyBullet()
 	Destroy(true);
 }
 
-void AProjectile::HitBullet(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) 
+void AProjectile::HitBullet(UPrimitiveComponent* OverlappedComp, AActor* OtherActor) 
 {
-	//UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ParticleHit, GetActorLocation(), FRotator::ZeroRotator, true);
+	//TODO: Damage 
 
 	DestroyBullet();
 }

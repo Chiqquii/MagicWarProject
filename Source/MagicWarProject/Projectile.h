@@ -37,6 +37,5 @@ public:
 	void DestroyBullet();
 
 	UFUNCTION(BlueprintCallable)
-		void HitBullet(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex,
-			bool bFromSweep, const FHitResult& SweepResult);
+		void HitBullet(UPrimitiveComponent* OverlappedComp, AActor* OtherActor);
 };
