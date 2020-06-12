@@ -27,9 +27,16 @@ protected:
 
 	float _TimerLife;
 
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		UParticleSystem* ParticleHit;
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 	void DestroyBullet();
+
+	UFUNCTION(BlueprintCallable)
+		void HitBullet(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex,
+			bool bFromSweep, const FHitResult& SweepResult);
 };
