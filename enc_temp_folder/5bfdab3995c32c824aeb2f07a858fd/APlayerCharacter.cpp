@@ -49,6 +49,7 @@ void AAPlayerCharacter::Shoot()
 {
 	if (ProjectileClass != NULL)
 	{
+		GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Red, TEXT("SPAWN"));
 		GetWorld()->SpawnActor<AProjectile>(ProjectileClass, GetActorLocation() + GetActorForwardVector() * DistSpawnBullet, GetActorRotation());
 	}
 }
@@ -81,7 +82,7 @@ void AAPlayerCharacter::ClientRPC_Implementation()
 void AAPlayerCharacter::ServerShootRPC_Implementation()
 {
 	Shoot();
-
+	GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Red, TEXT("Server"));
 	NetMulticastShootRPC_Implementation();
 }
 
@@ -89,6 +90,6 @@ void AAPlayerCharacter::NetMulticastShootRPC_Implementation()
 {
 	if (Role == ENetRole::ROLE_Authority)
 		return;
-
+	GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Red, TEXT("SHOOT"));
 	Shoot();
 }

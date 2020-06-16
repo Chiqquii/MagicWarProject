@@ -17,6 +17,15 @@ public:
 	// Sets default values for this character's properties
 	AAPlayerCharacter();
 
+	UFUNCTION(Client, Reliable)
+		void ClientRPC();
+
+	UFUNCTION(Server, Reliable)
+		void ServerShootRPC();
+
+	UFUNCTION(NetMulticast, Reliable)
+		void NetMulticastShootRPC();
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
