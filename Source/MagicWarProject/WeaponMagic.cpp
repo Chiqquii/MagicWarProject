@@ -22,19 +22,16 @@ void AWeaponMagic::BeginPlay()
 
 void AWeaponMagic::Fire(AAPlayerCharacter* character)
 {
-	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Some debug message!"));
 	if (character)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("2"));
 		FVector EyeLocation;
 		FRotator EyeRotation;
 		character->GetActorEyesViewPoint(EyeLocation, EyeRotation);
 
 		if (ProjectileClass != NULL) {
 
-			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("3"));
+			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Shoot!"));
 			GetWorld()->SpawnActor<AProjectile>(ProjectileClass, GetActorLocation() + character->GetActorForwardVector() * DistSpawnBullet, character->GetActorRotation());
-			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("SPAWN"));
 		}
 	}
 }
