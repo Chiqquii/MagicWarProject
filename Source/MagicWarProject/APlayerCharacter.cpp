@@ -37,7 +37,7 @@ void AAPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
-	PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &AAPlayerCharacter::ServerShootRPC_Implementation);
+	PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &AAPlayerCharacter::Shoot);
 
 	PlayerInputComponent->BindAxis("MoveForward", this, &AAPlayerCharacter::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &AAPlayerCharacter::MoveRight);
@@ -47,9 +47,10 @@ void AAPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 
 void AAPlayerCharacter::Shoot()
 {
+	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("00"));
 	if (CurrentWeapon != NULL)
 	{
-		CurrentWeapon->Fire();
+		CurrentWeapon->Fire(this);
 	}
 }
 

@@ -40,7 +40,7 @@ protected:
 		float Speed;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-		AWeaponMagic* CurrentWeapon;
+		class AWeaponMagic* CurrentWeapon;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		int numberSkin;

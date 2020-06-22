@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "IDamageable.h"
+#include "APlayerCharacter.h"
 #include "Enemy.generated.h"
 
 UCLASS()
@@ -19,6 +20,7 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+	TArray<AAPlayerCharacter> characters;
 
 public:	
 	// Called every frame

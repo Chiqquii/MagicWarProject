@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "APlayerCharacter.h"
 #include "Projectile.h"
 #include "WeaponMagic.generated.h"
 
@@ -36,5 +37,5 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
-		void Fire();
+		void Fire(AAPlayerCharacter* character);
 };
