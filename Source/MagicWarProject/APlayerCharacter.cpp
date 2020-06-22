@@ -47,9 +47,9 @@ void AAPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 
 void AAPlayerCharacter::Shoot()
 {
-	if (ProjectileClass != NULL)
+	if (CurrentWeapon != NULL)
 	{
-		GetWorld()->SpawnActor<AProjectile>(ProjectileClass, GetActorLocation() + GetActorForwardVector() * DistSpawnBullet, GetActorRotation());
+		CurrentWeapon->Fire();
 	}
 }
 

@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
-#include "Projectile.h"
+#include "WeaponMagic.h"
 #include "APlayerCharacter.generated.h"
 
 UCLASS()
@@ -40,10 +40,7 @@ protected:
 		float Speed;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-		float DistSpawnBullet;
-
-	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-		TSubclassOf<class AProjectile> ProjectileClass;
+		AWeaponMagic* CurrentWeapon;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		int numberSkin;
