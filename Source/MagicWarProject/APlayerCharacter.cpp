@@ -47,7 +47,6 @@ void AAPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 
 void AAPlayerCharacter::Shoot()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("00"));
 	if (CurrentWeapon != NULL)
 	{
 		CurrentWeapon->Fire(this);
