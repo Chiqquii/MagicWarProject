@@ -30,7 +30,6 @@ void AWeaponMagic::Fire(AAPlayerCharacter* character)
 
 		if (ProjectileClass != NULL) 
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Name: - %s"), *character->GetName());
 			GetWorld()->SpawnActor<AProjectile>(ProjectileClass, GetActorLocation() + character->GetActorForwardVector() * DistSpawnBullet, character->GetActorRotation());
 		}
 	}

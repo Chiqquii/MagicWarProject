@@ -59,4 +59,7 @@ public:
 	void MoveForward(float Axis);
 	void MoveRight(float Axis);
 	void CameraRotation(float Axis);
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void ViewAttack();
 };

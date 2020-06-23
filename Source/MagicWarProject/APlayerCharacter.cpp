@@ -53,12 +53,10 @@ void AAPlayerCharacter::CallShoot()
 
 	if (Role == ENetRole::ROLE_Authority)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Server!"));
 		ServerShoot();
 	}
 	else 
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Client!"));
 		ClientShoot();
 	}
 }
@@ -66,6 +64,7 @@ void AAPlayerCharacter::CallShoot()
 void AAPlayerCharacter::Shoot()
 {
 	CurrentWeapon->Fire(this);
+	ViewAttack();
 }
 
 void AAPlayerCharacter::MoveForward(float Axis)
@@ -81,6 +80,10 @@ void AAPlayerCharacter::MoveRight(float Axis)
 void AAPlayerCharacter::CameraRotation(float Axis)
 {
 	AddControllerYawInput(Axis);
+}
+
+void AAPlayerCharacter::ViewAttack()
+{
 }
 
 void AAPlayerCharacter::ClientShoot_Implementation()
