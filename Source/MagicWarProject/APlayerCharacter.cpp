@@ -9,6 +9,7 @@ AAPlayerCharacter::AAPlayerCharacter()
 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+	Damageable = CreateDefaultSubobject<UDamageableComponent>("Damageable");
 }
 
 // Called when the game starts or when spawned
@@ -16,13 +17,11 @@ void AAPlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
-	health = MaxHealth;
-
-	if (skins.Num() > 0) 
-	{
-		auto randomSkin = FMath::RandRange(0, skins.Num());
-		GetMesh()->SetSkeletalMesh(skins[randomSkin]);
-	}
+// 	if (skins.Num() > 0) 
+// 	{
+// 		auto randomSkin = FMath::RandRange(0, skins.Num());
+// 		GetMesh()->SetSkeletalMesh(skins[randomSkin]);
+// 	}
 }
 
 // Called every frame
@@ -47,6 +46,11 @@ void AAPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 
 void AAPlayerCharacter::CallShoot()
 {
+	if (CurrentWeapon == NULL)
+	{
+		return;
+	}
+
 	if (Role == ENetRole::ROLE_Authority)
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Server!"));
@@ -61,15 +65,7 @@ void AAPlayerCharacter::CallShoot()
 
 void AAPlayerCharacter::Shoot()
 {
-	if (CurrentWeapon != NULL)
-	{
-		CurrentWeapon->Fire(this);
-	}
-}
-
-void AAPlayerCharacter::TakeDamage()
-{
-
+	CurrentWeapon->Fire(this);
 }
 
 void AAPlayerCharacter::MoveForward(float Axis)

@@ -4,6 +4,7 @@
 
 #include "Engine.h"
 #include "GameFramework/Actor.h"
+#include "DamageableComponent.h"
 #include "Projectile.generated.h"
 
 UCLASS()
@@ -21,6 +22,9 @@ protected:
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		float Speed;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		float Damage;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		float TimeLife;

@@ -2,6 +2,7 @@
 
 
 #include "Projectile.h"
+#include "Templates/SubclassOf.h"
 
 // Sets default values
 AProjectile::AProjectile()
@@ -43,7 +44,12 @@ void AProjectile::DestroyBullet()
 void AProjectile::HitBullet(UPrimitiveComponent* OverlappedComp, AActor* OtherActor) 
 {
 	//TODO: Damage 
+	auto damageable = OtherActor->FindComponentByClass<UDamageableComponent>();
 
+	if (damageable != NULL) 
+	{
+		damageable->Damage(Damage);
+	}
 	DestroyBullet();
 }
 

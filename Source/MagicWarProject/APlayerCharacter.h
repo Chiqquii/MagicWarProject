@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "WeaponMagic.h"
+#include "DamageableComponent.h"
 #include "APlayerCharacter.generated.h"
 
 UCLASS()
@@ -31,22 +32,16 @@ protected:
 	virtual void BeginPlay() override;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-		float health;
-
-	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-		float MaxHealth;
-
-	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		float Speed;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		class AWeaponMagic* CurrentWeapon;
 
-	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-		int numberSkin;
+// 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+// 		int numberSkin;
 
-	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-		TArray<USkeletalMesh*> skins;
+// 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+// 		TArray<USkeletalMesh*> skins;
 
 public:
 
@@ -56,9 +51,11 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		UDamageableComponent* Damageable;
+
 	void CallShoot();
 	void Shoot();
-	void TakeDamage();
 	void MoveForward(float Axis);
 	void MoveRight(float Axis);
 	void CameraRotation(float Axis);
