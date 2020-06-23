@@ -37,12 +37,26 @@ void AAPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
-	PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &AAPlayerCharacter::Shoot);
+	PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &AAPlayerCharacter::CallShoot);
 
 	PlayerInputComponent->BindAxis("MoveForward", this, &AAPlayerCharacter::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &AAPlayerCharacter::MoveRight);
 	PlayerInputComponent->BindAxis("Turn", this, &AAPlayerCharacter::CameraRotation);
 
+}
+
+void AAPlayerCharacter::CallShoot()
+{
+	if (Role == ENetRole::ROLE_Authority)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Server!"));
+		ServerShoot();
+	}
+	else 
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Client!"));
+		ClientShoot();
+	}
 }
 
 void AAPlayerCharacter::Shoot()
@@ -73,19 +87,21 @@ void AAPlayerCharacter::CameraRotation(float Axis)
 	AddControllerYawInput(Axis);
 }
 
-void AAPlayerCharacter::ClientRPC_Implementation()
+void AAPlayerCharacter::ClientShoot_Implementation()
 {
+	//Shoot();
 
+	ServerShoot();
 }
 
-void AAPlayerCharacter::ServerShootRPC_Implementation()
+void AAPlayerCharacter::ServerShoot_Implementation()
 {
 	Shoot();
 
-	NetMulticastShootRPC_Implementation();
+	NetMulticastShoot();
 }
 
-void AAPlayerCharacter::NetMulticastShootRPC_Implementation()
+void AAPlayerCharacter::NetMulticastShoot_Implementation()
 {
 	if (Role == ENetRole::ROLE_Authority)
 		return;

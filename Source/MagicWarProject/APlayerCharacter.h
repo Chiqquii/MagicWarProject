@@ -18,13 +18,13 @@ public:
 	AAPlayerCharacter();
 
 	UFUNCTION(Client, Reliable)
-		void ClientRPC();
+		void ClientShoot();
 
 	UFUNCTION(Server, Reliable)
-		void ServerShootRPC();
+		void ServerShoot();
 
 	UFUNCTION(NetMulticast, Reliable)
-		void NetMulticastShootRPC();
+		void NetMulticastShoot();
 
 protected:
 	// Called when the game starts or when spawned
@@ -56,6 +56,7 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	void CallShoot();
 	void Shoot();
 	void TakeDamage();
 	void MoveForward(float Axis);

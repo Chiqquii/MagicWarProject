@@ -28,9 +28,9 @@ void AWeaponMagic::Fire(AAPlayerCharacter* character)
 		FRotator EyeRotation;
 		character->GetActorEyesViewPoint(EyeLocation, EyeRotation);
 
-		if (ProjectileClass != NULL) {
-
-			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Shoot!"));
+		if (ProjectileClass != NULL) 
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Name: - %s"), *character->GetName());
 			GetWorld()->SpawnActor<AProjectile>(ProjectileClass, GetActorLocation() + character->GetActorForwardVector() * DistSpawnBullet, character->GetActorRotation());
 		}
 	}
