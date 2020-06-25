@@ -19,10 +19,14 @@ void AEnemyCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
-	Target = GetTarget();
-	RequiredDistanceToTarget = 300;
-	DistanceToCurrentTarget = 0;
-	CanMove = true;
+	if (Role == ROLE_Authority)
+	{
+		Target = GetTarget();
+		RequiredDistanceToTarget = 300;
+		DistanceToCurrentTarget = 0;
+		CanMove = true;
+	}
+
 
 }
 
@@ -31,33 +35,35 @@ void AEnemyCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	if (Target != NULL)
-		DistanceToCurrentTarget = (GetActorLocation() - Target->GetActorLocation()).Size();
-
-	if (CanMove)
+	if (Role == ROLE_Authority)
 	{
-		if (DistanceToCurrentTarget > RequiredDistanceToTarget)
+		if (Target != NULL)
+			DistanceToCurrentTarget = (GetActorLocation() - Target->GetActorLocation()).Size();
+
+		if (CanMove)
 		{
-			FVector Dir = Target->GetActorLocation() - GetActorLocation();
-			FVector Location = GetActorLocation();
+			if (DistanceToCurrentTarget > RequiredDistanceToTarget)
+			{
+				FVector Dir = Target->GetActorLocation() - GetActorLocation();
+				FVector Location = GetActorLocation();
 
-			Location += Dir * MoveSpeed * DeltaTime;
+				Location += Dir * MoveSpeed * DeltaTime;
 
-			SetActorLocation(Location);
-
+				SetActorLocation(Location);
+			}
+			else
+			{
+				CanMove = false;
+			}
 		}
 		else
 		{
-			CanMove = false;
+			if (DistanceToCurrentTarget > StartChasingPlayer)
+				CanMove = true;
+			else
+				UE_LOG(LogTemp, Warning, TEXT("Disparo"));
 		}
-	}
-	else
-	{
-		if (DistanceToCurrentTarget > StartChasingPlayer)
-			CanMove = true;
-		else
-			UE_LOG(LogTemp, Warning, TEXT("Disparo"));
-	}
+	}	
 }
 
 
