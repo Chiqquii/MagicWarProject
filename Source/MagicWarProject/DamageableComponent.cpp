@@ -19,7 +19,14 @@ UDamageableComponent::UDamageableComponent()
 void UDamageableComponent::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+// 	DamageableUI = CreateWidget<UDamageableUI>(this, DamageableUIClass); 
+// 	if (!DamageableUI)
+// 	{
+// 		DamageableUI->AddToViewport();
+// 		DamageableUI->SetVisibility(ESlateVisibility::Hidden);
+// 	}
+
 	ResetLife();
 }
 
@@ -36,6 +43,11 @@ void UDamageableComponent::Damage(float damage)
 {
 	Health -= damage;
 
+	if (DamageableUI != NULL)
+	{
+		DamageableUI->ChangeHealth(Health, MaxHealth);
+	}
+
 	if (Health <= 0) 
 	{
 		Health = 0;
@@ -51,5 +63,10 @@ void UDamageableComponent::Kill()
 void UDamageableComponent::ResetLife()
 {
 	Health = MaxHealth;
+
+	if (DamageableUI != NULL)
+	{
+		DamageableUI->ChangeHealth(Health, MaxHealth);
+	}
 }
 

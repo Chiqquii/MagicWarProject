@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "DamageableUI.h"
 #include "DamageableComponent.generated.h"
 
 
@@ -23,12 +24,18 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Settings")
 		float Health;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Settings")
+		UDamageableUI* DamageableUI;
+
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Settings")
 		float MaxHealth;
+
+// 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Settings")
+// 		TSubclassOf<class UDamageableUI> DamageableUIClass;
 
 	UFUNCTION(BlueprintCallable)
 	void Damage(float damage);
