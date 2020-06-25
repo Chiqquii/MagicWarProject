@@ -5,6 +5,7 @@
 #include "Engine.h"
 #include "GameFramework/Actor.h"
 #include "DamageableComponent.h"
+#include "PointsComponent.h"
 #include "Projectile.generated.h"
 
 UCLASS()
@@ -33,6 +34,9 @@ protected:
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		UParticleSystem* ParticleHit;
+
+	UPROPERTY(EditAnywhere)
+		UPointsComponent* PointsComponent;
 
 public:	
 	// Called every frame

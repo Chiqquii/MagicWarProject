@@ -21,8 +21,11 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Settings")
+	UPROPERTY(BlueprintReadWrite)
 		float Health;
+
+	UPROPERTY(BlueprintReadWrite)
+		int CounterRespawn;
 
 public:	
 	// Called every frame
@@ -32,6 +35,9 @@ public:
 		float MaxHealth;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Settings")
+		int MaxRespawn;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Settings")
 		UDamageableUI* DamageableUI;
 
 	UFUNCTION(BlueprintCallable)
@@ -39,6 +45,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void Kill();
+
+	UFUNCTION(BlueprintCallable)
+	void Respawn();
 
 	UFUNCTION(BlueprintCallable)
 	void ResetLife();
