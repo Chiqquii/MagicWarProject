@@ -24,9 +24,6 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Settings")
 		float Health;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Settings")
-		UDamageableUI* DamageableUI;
-
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
@@ -34,8 +31,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Settings")
 		float MaxHealth;
 
-// 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Settings")
-// 		TSubclassOf<class UDamageableUI> DamageableUIClass;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Settings")
+		UDamageableUI* DamageableUI;
 
 	UFUNCTION(BlueprintCallable)
 	void Damage(float damage);

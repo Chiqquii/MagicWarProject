@@ -20,12 +20,18 @@ void UDamageableComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
-// 	DamageableUI = CreateWidget<UDamageableUI>(this, DamageableUIClass); 
-// 	if (!DamageableUI)
+// 	auto Owner = GetOwner();
+// 	if (Owner)
 // 	{
-// 		DamageableUI->AddToViewport();
-// 		DamageableUI->SetVisibility(ESlateVisibility::Hidden);
+// 		DamageableUI = CreateWidget<UDamageableUI>(Owner, DamageableUIClass, "DamageableUI");
+// 
+// 		if (DamageableUI)
+// 		{
+// 			DamageableUI->AddToViewport();
+// 			DamageableUI->SetVisibility(ESlateVisibility::Hidden);
+// 		}
 // 	}
+
 
 	ResetLife();
 }

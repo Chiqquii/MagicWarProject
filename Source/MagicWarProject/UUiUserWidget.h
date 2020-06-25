@@ -13,11 +13,5 @@ UCLASS()
 class MAGICWARPROJECT_API UUUiUserWidget : public UUserWidget
 {
 	GENERATED_BODY()
-
-protected:
-
-
-	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
-	class UProgressBar* ProgressBar_Health;
 	
 };

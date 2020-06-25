@@ -9,6 +9,5 @@ void AMagicWarGameMode::CounterTime(float DeltaTime)
 {
 	Time += DeltaTime;
 
-	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT(" %s"), Time);
-	UE_LOG(LogTemp, Warning, TEXT("Text, %d"), Time);
 }
+

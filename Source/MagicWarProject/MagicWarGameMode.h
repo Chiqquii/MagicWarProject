@@ -21,4 +21,5 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		float Time;
+
 };
