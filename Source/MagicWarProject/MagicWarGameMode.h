@@ -13,6 +13,10 @@ UCLASS()
 class MAGICWARPROJECT_API AMagicWarGameMode : public AGameModeBase
 {
 	GENERATED_BODY()
+
+protected:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		float Time;
 	
 public:
 
@@ -20,6 +24,6 @@ public:
 	void CounterTime(float DeltaTime);
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		float Time;
+		float TimeRespawn;
 
 };

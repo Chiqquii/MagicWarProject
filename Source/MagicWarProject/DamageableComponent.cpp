@@ -57,13 +57,28 @@ void UDamageableComponent::Damage(float damage)
 	if (Health <= 0) 
 	{
 		Health = 0;
-		Kill();
+
+		if (CounterRespawn >= MaxRespawn) 
+		{
+			Kill();
+		}
+		else 
+		{
+			Respawn();
+		}
+
 	}
 }
 
 void UDamageableComponent::Kill()
 {
 	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("KILL"));
+}
+
+void UDamageableComponent::Respawn()
+{
+	CounterRespawn++;
+	ResetLife();
 }
 
 void UDamageableComponent::ResetLife()

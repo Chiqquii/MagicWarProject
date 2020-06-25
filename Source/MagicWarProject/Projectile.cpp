@@ -43,13 +43,25 @@ void AProjectile::DestroyBullet()
 
 void AProjectile::HitBullet(UPrimitiveComponent* OverlappedComp, AActor* OtherActor) 
 {
-	//TODO: Damage 
 	auto damageable = OtherActor->FindComponentByClass<UDamageableComponent>();
 
-	if (damageable != NULL) 
+
+	if (damageable) 
 	{
 		damageable->Damage(Damage);
 	}
+
+	if (PointsComponent && !PointsComponent->IgnoreAddPoints)
+	{
+		auto points = OtherActor->FindComponentByClass<UPointsComponent>();
+
+		if (points)
+		{
+			PointsComponent->AddPoints(points->PointsToGive);
+		}
+	}
+
+
 	DestroyBullet();
 }
 
