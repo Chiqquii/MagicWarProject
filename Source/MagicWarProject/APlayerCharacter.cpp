@@ -82,10 +82,6 @@ void AAPlayerCharacter::CameraRotation(float Axis)
 	AddControllerYawInput(Axis);
 }
 
-void AAPlayerCharacter::ViewAttack()
-{
-}
-
 void AAPlayerCharacter::ClientShoot_Implementation()
 {
 	//Shoot();
