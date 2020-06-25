@@ -30,7 +30,8 @@ void AWeaponMagic::Fire(AAPlayerCharacter* character)
 
 		if (ProjectileClass != NULL) 
 		{
-			GetWorld()->SpawnActor<AProjectile>(ProjectileClass, GetActorLocation() + character->GetActorForwardVector() * DistSpawnBullet, character->GetActorRotation());
+			auto Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileClass, GetActorLocation() + character->GetActorForwardVector() * DistSpawnBullet, character->GetActorRotation());
+			Projectile->Character = character;
 		}
 	}
 }
