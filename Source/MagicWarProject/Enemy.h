@@ -20,12 +20,23 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-	TArray<AAPlayerCharacter> characters;
+
+	AActor* Target;
+
+	UPROPERTY(EditDefaultsOnly)
+	float MoveSpeed;
+
+	UPROPERTY(EditDefaultsOnly)
+	float RequiredDistanceToTarget;
+
+	float DistanceToCurrentTarget;
 
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+
+	AActor* GetTarget();
 	void Damage(float damage);
 	void Kill();
 };
