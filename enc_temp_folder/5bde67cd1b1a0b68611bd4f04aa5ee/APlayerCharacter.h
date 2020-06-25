@@ -38,12 +38,6 @@ protected:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		class AWeaponMagic* CurrentWeapon;
 
-	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
-		class UDamageableComponent* Damageable;
-
-	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
-		class UPointsComponent* Points;
-
 public:
 
 	// Called every frame
@@ -51,6 +45,12 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Components")
+		UDamageableComponent* Damageable;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Components")
+		UPointsComponent* Points;
 
 	void CallShoot();
 	void Shoot();
