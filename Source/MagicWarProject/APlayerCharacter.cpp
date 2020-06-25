@@ -16,8 +16,6 @@ void AAPlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
-	Damageable = FindComponentByClass(UDamageableComponent);
-	Points = FindComponentByClass(UPointsComponent);
 // 	if (skins.Num() > 0) 
 // 	{
 // 		auto randomSkin = FMath::RandRange(0, skins.Num());
