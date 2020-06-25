@@ -30,6 +30,11 @@ protected:
 
 	float DistanceToCurrentTarget;
 
+	bool CanMove;
+
+	UPROPERTY(EditDefaultsOnly)
+	float StartChasingPlayer;
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
