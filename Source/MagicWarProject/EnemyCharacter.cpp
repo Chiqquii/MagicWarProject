@@ -9,7 +9,7 @@
 // Sets default values
 AEnemyCharacter::AEnemyCharacter()
 {
- 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
 }
@@ -18,10 +18,11 @@ AEnemyCharacter::AEnemyCharacter()
 void AEnemyCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
 	Target = GetTarget();
 	RequiredDistanceToTarget = 300;
 	DistanceToCurrentTarget = 0;
+	CanMove = true;
 
 }
 
@@ -33,18 +34,29 @@ void AEnemyCharacter::Tick(float DeltaTime)
 	if (Target != NULL)
 		DistanceToCurrentTarget = (GetActorLocation() - Target->GetActorLocation()).Size();
 
-	if (DistanceToCurrentTarget > RequiredDistanceToTarget)
+	if (CanMove)
 	{
-		FVector Dir = Target->GetActorLocation() - GetActorLocation();
-		FVector Location = GetActorLocation();
+		if (DistanceToCurrentTarget > RequiredDistanceToTarget)
+		{
+			FVector Dir = Target->GetActorLocation() - GetActorLocation();
+			FVector Location = GetActorLocation();
 
-		Location += Dir * MoveSpeed * DeltaTime;
+			Location += Dir * MoveSpeed * DeltaTime;
 
-		SetActorLocation(Location);
+			SetActorLocation(Location);
+
+		}
+		else
+		{
+			CanMove = false;
+		}
 	}
 	else
 	{
-		UE_LOG(LogTemp, Warning, TEXT("LLEGUE"))
+		if (DistanceToCurrentTarget > StartChasingPlayer)
+			CanMove = true;
+		else
+			UE_LOG(LogTemp, Warning, TEXT("Disparo"));
 	}
 }
 
