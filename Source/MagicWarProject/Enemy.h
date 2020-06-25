@@ -20,20 +20,12 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-
-	FVector NextPathPoint;
-
-	UPROPERTY(EditDefaultsOnly)
-	float RequiredDistanceToTarget;
-
-	UPROPERTY(EditDefaultsOnly)
-	float MoveSpeed;
+	TArray<AAPlayerCharacter> characters;
 
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	FVector PathToTarget();
 	void Damage(float damage);
 	void Kill();
 };
