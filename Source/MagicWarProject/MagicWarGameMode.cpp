@@ -8,8 +8,6 @@
 void AMagicWarGameMode::CounterTime(float DeltaTime)
 {
 	Time += DeltaTime;
-
-	//DOREPLIFETIME(AMagicWarGameMode, Time);
 }
 
 bool AMagicWarGameMode::Respawn(class URespawnComponent* RespawnComponent)
