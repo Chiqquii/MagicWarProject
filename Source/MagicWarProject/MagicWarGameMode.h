@@ -7,9 +7,9 @@
 #include "RespawnComponent.h"
 #include "MagicWarGameMode.generated.h"
 
-/**
- * 
- */
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnActorKilled, AActor*, VictimActor, AActor*, KillerActor);
+
 UCLASS()
 class MAGICWARPROJECT_API AMagicWarGameMode : public AGameModeBase
 {
@@ -39,4 +39,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float TimeRespawn;
 
+	UPROPERTY(BlueprintAssignable)
+	FOnActorKilled OnActorKilled;
 };

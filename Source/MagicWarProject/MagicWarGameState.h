@@ -14,4 +14,13 @@ class MAGICWARPROJECT_API AMagicWarGameState : public AGameStateBase
 {
 	GENERATED_BODY()
 	
+protected:
+
+	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite)
+		float Time;
+
+public:
+
+	UFUNCTION(BlueprintCallable)
+		void CounterTime(float DeltaTime);
 };
