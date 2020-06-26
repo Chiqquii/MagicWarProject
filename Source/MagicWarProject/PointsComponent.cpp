@@ -2,6 +2,7 @@
 
 
 #include "PointsComponent.h"
+#include "Engine/Engine.h"
 
 // Sets default values for this component's properties
 UPointsComponent::UPointsComponent()

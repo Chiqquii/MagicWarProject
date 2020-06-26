@@ -51,17 +51,17 @@ void AProjectile::HitBullet(UPrimitiveComponent* OverlappedComp, AActor* OtherAc
 		damageable->Damage(Damage);
 	}
 
-	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("HIT!"));
 
-	if (Character && Character->Points && Character->Points->IgnoreAddPoints != false)
+	if (Character)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Points hit"));
-		auto points = OtherActor->FindComponentByClass<UPointsComponent>();
-
-		if (points)
+		if (Character->Points )
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Add points"));
-			Character->Points->AddPoints(points->PointsToGive);
+			auto points = OtherActor->FindComponentByClass<UPointsComponent>();
+
+			if (points)
+			{
+				Character->Points->AddPoints(points->PointsToGive);
+			}
 		}
 	}
 
