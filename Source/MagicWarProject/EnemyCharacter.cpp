@@ -113,7 +113,7 @@ void AEnemyCharacter::Kill()
 
 void AEnemyCharacter::Shoot()
 {
-	CounterShoot += GetWorld()->GetTimeSeconds();
+	CounterShoot += GetWorld()->GetDeltaSeconds();
 
 	if (CounterShoot < DelayShoot) return;
 

@@ -59,20 +59,7 @@ void UDamageableComponent::Damage(float damage)
 	{
 		Health = 0;
 
-		if (RespawnComponent)
-		{
-			auto GM = Cast<AMagicWarGameMode>(GetWorld()->GetAuthGameMode());
-
-			if (GM && GM->Respawn(RespawnComponent))
-				Respawn();
-			else 
-				Kill();
-		}
-		else 
-		{
-			Kill();
-		}
-
+		Respawn();
 	}
 }
 
@@ -83,6 +70,26 @@ void UDamageableComponent::Kill()
 
 void UDamageableComponent::Respawn()
 {
+	if (RespawnComponent == nullptr || RespawnComponent->CounterRespawn >= RespawnComponent->MaxRespawn)
+	{
+		Kill();
+		return;
+	}
+
+	RespawnComponent->CounterRespawn++;
+	RespawnComponent->RespawnUI->ActiveCounter();
+
+	auto Counter = 0;
+
+	while (RespawnComponent->CounterRespawn < RespawnComponent->MaxRespawn)
+	{
+		Counter += GetWorld()->DeltaTimeSeconds;
+
+		RespawnComponent->RespawnUI->CounterRespawn(Counter);
+	}
+
+	RespawnComponent->RespawnUI->FinishCounter();
+
 	ResetLife();
 }
 
