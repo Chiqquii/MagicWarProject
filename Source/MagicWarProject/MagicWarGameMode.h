@@ -16,7 +16,7 @@ class MAGICWARPROJECT_API AMagicWarGameMode : public AGameModeBase
 	GENERATED_BODY()
 
 protected:
-	UPROPERTY(Replicated, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		float Time;
 	
 public:

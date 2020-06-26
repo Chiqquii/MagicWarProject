@@ -4,14 +4,12 @@
 #include "MagicWarGameMode.h"
 #include "Engine/Engine.h"
 #include "Logging/LogMacros.h"
-#include "Net/UnrealNetwork.h"
-
 
 void AMagicWarGameMode::CounterTime(float DeltaTime)
 {
 	Time += DeltaTime;
 
-	DOREPLIFETIME(AMagicWarGameMode, Time);
+	//DOREPLIFETIME(AMagicWarGameMode, Time);
 }
 
 bool AMagicWarGameMode::Respawn(class URespawnComponent* RespawnComponent)
