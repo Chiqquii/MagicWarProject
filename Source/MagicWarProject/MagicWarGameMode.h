@@ -16,10 +16,19 @@ class MAGICWARPROJECT_API AMagicWarGameMode : public AGameModeBase
 	GENERATED_BODY()
 
 protected:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(Replicated, BlueprintReadWrite)
 		float Time;
 	
 public:
+
+// 	UFUNCTION(Client, Reliable)
+// 	void ClientTimer();
+// 
+// 	UFUNCTION(Server, Reliable)
+// 	void ServerTimer();
+// 
+// 	UFUNCTION(NetMulticast, Reliable)
+// 	void NetMulticastTimer();
 
 	UFUNCTION(BlueprintCallable)
 	void CounterTime(float DeltaTime);
