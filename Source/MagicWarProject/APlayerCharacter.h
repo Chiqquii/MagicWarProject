@@ -7,6 +7,7 @@
 #include "WeaponMagic.h"
 #include "DamageableComponent.h"
 #include "PointsComponent.h"
+#include "RespawnComponent.h"
 #include "APlayerCharacter.generated.h"
 
 UCLASS()
@@ -60,4 +61,7 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
 		class UPointsComponent* Points;
+
+	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
+		class URespawnComponent* Respawn;
 };

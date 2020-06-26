@@ -2,6 +2,7 @@
 
 
 #include "DamageableComponent.h"
+#include "MagicWarGameMode.h"
 #include "Engine/Engine.h"
 
 // Sets default values for this component's properties
@@ -58,13 +59,18 @@ void UDamageableComponent::Damage(float damage)
 	{
 		Health = 0;
 
-		if (CounterRespawn >= MaxRespawn) 
+		if (RespawnComponent)
 		{
-			Kill();
+			auto GM = Cast<AMagicWarGameMode>(GetWorld()->GetAuthGameMode());
+
+			if (GM && GM->Respawn(RespawnComponent))
+				Respawn();
+			else 
+				Kill();
 		}
 		else 
 		{
-			Respawn();
+			Kill();
 		}
 
 	}
@@ -77,7 +83,6 @@ void UDamageableComponent::Kill()
 
 void UDamageableComponent::Respawn()
 {
-	CounterRespawn++;
 	ResetLife();
 }
 

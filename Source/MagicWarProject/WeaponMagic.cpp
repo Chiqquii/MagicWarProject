@@ -28,7 +28,7 @@ void AWeaponMagic::Fire(AAPlayerCharacter* character)
 		FRotator EyeRotation;
 		character->GetActorEyesViewPoint(EyeLocation, EyeRotation);
 
-		if (ProjectileClass != NULL) 
+		if (ProjectileClass) 
 		{
 			auto Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileClass, GetActorLocation() + character->GetActorForwardVector() * DistSpawnBullet, character->GetActorRotation());
 			Projectile->Character = character;

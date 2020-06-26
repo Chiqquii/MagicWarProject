@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 #include "DamageableUI.h"
+#include "RespawnComponent.h"
 #include "DamageableComponent.generated.h"
 
 
@@ -24,9 +25,6 @@ protected:
 	UPROPERTY(BlueprintReadWrite)
 		float Health;
 
-	UPROPERTY(BlueprintReadWrite)
-		int CounterRespawn;
-
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
@@ -35,10 +33,10 @@ public:
 		float MaxHealth;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Settings")
-		int MaxRespawn;
+		UDamageableUI* DamageableUI;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Settings")
-		UDamageableUI* DamageableUI;
+	class URespawnComponent* RespawnComponent;
 
 	UFUNCTION(BlueprintCallable)
 	void Damage(float damage);

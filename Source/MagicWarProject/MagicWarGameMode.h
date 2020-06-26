@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
+#include "RespawnComponent.h"
 #include "MagicWarGameMode.generated.h"
 
 /**
@@ -23,7 +24,10 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void CounterTime(float DeltaTime);
 
+	UFUNCTION(BlueprintCallable)
+	bool Respawn(class URespawnComponent* RespawnComponent);
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		float TimeRespawn;
+	float TimeRespawn;
 
 };
