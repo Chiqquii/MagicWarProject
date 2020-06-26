@@ -5,6 +5,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "APlayerCharacter.h"
 #include "GameFramework/Actor.h"
+#include "Kismet/KismetMathLibrary.h"
 
 // Sets default values
 AEnemyCharacter::AEnemyCharacter()
@@ -35,35 +36,38 @@ void AEnemyCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	if (Role == ROLE_Authority)
+	if (Target != NULL) 
 	{
-		if (Target != NULL)
-			DistanceToCurrentTarget = (GetActorLocation() - Target->GetActorLocation()).Size();
+		DistanceToCurrentTarget = (GetActorLocation() - Target->GetActorLocation()).Size();
 
-		if (CanMove)
+		FVector forward = Target->GetActorLocation() - GetActorLocation();
+		FRotator Rot = UKismetMathLibrary::MakeRotFromXZ(forward, GetActorUpVector());
+		SetActorRotation(Rot);
+	}
+
+	if (CanMove)
+	{
+		if (DistanceToCurrentTarget > RequiredDistanceToTarget)
 		{
-			if (DistanceToCurrentTarget > RequiredDistanceToTarget)
-			{
-				FVector Dir = Target->GetActorLocation() - GetActorLocation();
-				FVector Location = GetActorLocation();
+			FVector Dir = Target->GetActorLocation() - GetActorLocation();
+			FVector Location = GetActorLocation();
 
-				Location += Dir * MoveSpeed * DeltaTime;
+			Location += Dir * MoveSpeed * DeltaTime;
 
-				SetActorLocation(Location);
-			}
-			else
-			{
-				CanMove = false;
-			}
+			SetActorLocation(Location);
 		}
 		else
 		{
-			if (DistanceToCurrentTarget > StartChasingPlayer)
-				CanMove = true;
-			else
-				UE_LOG(LogTemp, Warning, TEXT("Disparo"));
+			CanMove = false;
 		}
-	}	
+	}
+	else
+	{
+		if (DistanceToCurrentTarget > StartChasingPlayer)
+			CanMove = true;
+		else if(Weapon)
+			Shoot();
+	}
 }
 
 
@@ -107,4 +111,14 @@ void AEnemyCharacter::Kill()
 
 }
 
+void AEnemyCharacter::Shoot()
+{
+	CounterShoot += GetWorld()->GetTimeSeconds();
+
+	if (CounterShoot < DelayShoot) return;
+
+	CounterShoot = 0;
+
+	Weapon->FireActor(this);
+}
 
