@@ -2,6 +2,8 @@
 
 
 #include "WeaponMagic.h"
+#include "Engine/Engine.h"
+#include "Kismet/KismetMathLibrary.h"
 
 // Sets default values
 AWeaponMagic::AWeaponMagic()
@@ -28,10 +30,14 @@ void AWeaponMagic::Fire(AAPlayerCharacter* character)
 		FRotator EyeRotation;
 		character->GetActorEyesViewPoint(EyeLocation, EyeRotation);
 
-		if (ProjectileClass) 
+		if (ProjectileClass != nullptr) 
 		{
 			auto Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileClass, GetActorLocation() + character->GetActorForwardVector() * DistSpawnBullet, character->GetActorRotation());
 			Projectile->Character = character;
+
+			if (Projectile->Character) {
+				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("AddCharacter"), Projectile->Character);
+			}
 		}
 	}
 }
@@ -40,7 +46,7 @@ void AWeaponMagic::FireActor(AActor* Actor)
 {
 	if (ProjectileClass)
 	{
-		auto Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileClass, GetActorLocation() + Actor->GetActorForwardVector() * DistSpawnBullet, Actor->GetActorRotation());
+		GetWorld()->SpawnActor<AProjectile>(ProjectileClass, GetActorLocation() + Actor->GetActorForwardVector() * DistSpawnBullet, UKismetMathLibrary::MakeRotFromXZ(Actor->GetActorForwardVector(), GetActorUpVector()));
 	}
 }
 

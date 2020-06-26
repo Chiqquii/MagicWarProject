@@ -72,6 +72,8 @@ void UDamageableComponent::Kill()
 	{
 		GM->OnActorKilled.Broadcast();
 	}
+
+	GetOwner()->Destroy(true);
 }
 
 void UDamageableComponent::Respawn()
@@ -82,19 +84,19 @@ void UDamageableComponent::Respawn()
 		return;
 	}
 
-	RespawnComponent->CounterRespawn++;
-	RespawnComponent->RespawnUI->ActiveCounter();
-
-	auto Counter = 0;
-
-	while (RespawnComponent->CounterRespawn < RespawnComponent->MaxRespawn)
-	{
-		Counter += GetWorld()->DeltaTimeSeconds;
-
-		RespawnComponent->RespawnUI->CounterRespawn(Counter);
-	}
-
-	RespawnComponent->RespawnUI->FinishCounter();
+// 	RespawnComponent->CounterRespawn++;
+// 	RespawnComponent->RespawnUI->ActiveCounter();
+// 
+// 	auto Counter = 0;
+// 
+// 	while (RespawnComponent->CounterRespawn < RespawnComponent->MaxRespawn)
+// 	{
+// 		Counter += GetWorld()->DeltaTimeSeconds;
+// 
+// 		RespawnComponent->RespawnUI->CounterRespawn(Counter);
+// 	}
+// 
+// 	RespawnComponent->RespawnUI->FinishCounter();
 
 	ResetLife();
 }
