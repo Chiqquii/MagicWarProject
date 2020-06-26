@@ -6,6 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "DamageableComponent.h"
 #include "PointsComponent.h"
+#include "APlayerCharacter.h"
 #include "Projectile.generated.h"
 
 UCLASS()
@@ -35,9 +36,6 @@ protected:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		UParticleSystem* ParticleHit;
 
-	UPROPERTY(EditAnywhere)
-		UPointsComponent* PointsComponent;
-
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -46,4 +44,7 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 		void HitBullet(UPrimitiveComponent* OverlappedComp, AActor* OtherActor);
+
+	UPROPERTY(EditAnywhere)
+		class AAPlayerCharacter* Character;
 };

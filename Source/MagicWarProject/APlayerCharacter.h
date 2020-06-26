@@ -38,12 +38,6 @@ protected:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		class AWeaponMagic* CurrentWeapon;
 
-	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
-		class UDamageableComponent* Damageable;
-
-	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
-		class UPointsComponent* Points;
-
 public:
 
 	// Called every frame
@@ -60,4 +54,10 @@ public:
 
 	UFUNCTION(BlueprintImplementableEvent)
 	void ViewAttack();
+
+	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
+		class UDamageableComponent* Damageable;
+
+	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
+		class UPointsComponent* Points;
 };
