@@ -38,4 +38,7 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
 		void Fire(AAPlayerCharacter* character);
+
+	UFUNCTION(BlueprintCallable, Category = "Weapon")
+		void FireActor(AActor* Actor);
 };

@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "WeaponMagic.h"
 #include "EnemyCharacter.generated.h"
 
 UCLASS()
@@ -22,8 +23,8 @@ protected:
 
 	AActor* Target;
 
-	UPROPERTY(EditDefaultsOnly)
-		float MoveSpeed;
+	UPROPERTY()
+		float CounterShoot;
 
 	UPROPERTY(EditDefaultsOnly)
 		float RequiredDistanceToTarget;
@@ -39,7 +40,18 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	UPROPERTY(EditDefaultsOnly)
+		float MoveSpeed;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		class AWeaponMagic* Weapon;
+
+	UPROPERTY(EditAnywhere)
+		float DelayShoot;
+
 	AActor* GetTarget();
 	void Damage(float damage);
 	void Kill();
+	void Shoot();
+
 };

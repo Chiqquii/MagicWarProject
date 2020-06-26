@@ -36,6 +36,14 @@ void AWeaponMagic::Fire(AAPlayerCharacter* character)
 	}
 }
 
+void AWeaponMagic::FireActor(AActor* Actor)
+{
+	if (ProjectileClass)
+	{
+		auto Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileClass, GetActorLocation() + Actor->GetActorForwardVector() * DistSpawnBullet, Actor->GetActorRotation());
+	}
+}
+
 // Called every frame
 void AWeaponMagic::Tick(float DeltaTime)
 {

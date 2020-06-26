@@ -50,7 +50,7 @@ void UDamageableComponent::Damage(float damage)
 {
 	Health -= damage;
 
-	if (DamageableUI != NULL)
+	if (DamageableUI)
 	{
 		DamageableUI->ChangeHealth(Health, MaxHealth);
 	}
@@ -90,7 +90,7 @@ void UDamageableComponent::ResetLife()
 {
 	Health = MaxHealth;
 
-	if (DamageableUI != NULL)
+	if (DamageableUI)
 	{
 		DamageableUI->ChangeHealth(Health, MaxHealth);
 	}
