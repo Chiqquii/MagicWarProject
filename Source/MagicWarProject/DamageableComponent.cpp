@@ -66,6 +66,12 @@ void UDamageableComponent::Damage(float damage)
 void UDamageableComponent::Kill()
 {
 	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("KILL"));
+
+	AMagicWarGameMode* GM = Cast<AMagicWarGameMode>(GetWorld()->GetAuthGameMode());
+	if (GM)
+	{
+		GM->OnActorKilled.Broadcast();
+	}
 }
 
 void UDamageableComponent::Respawn()

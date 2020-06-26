@@ -8,7 +8,7 @@
 #include "MagicWarGameMode.generated.h"
 
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnActorKilled, AActor*, VictimActor, AActor*, KillerActor);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnActorKilled);
 
 UCLASS()
 class MAGICWARPROJECT_API AMagicWarGameMode : public AGameModeBase
