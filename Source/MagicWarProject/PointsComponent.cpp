@@ -3,6 +3,7 @@
 
 #include "PointsComponent.h"
 #include "Engine/Engine.h"
+#include "Net/UnrealNetwork.h"
 
 // Sets default values for this component's properties
 UPointsComponent::UPointsComponent()
@@ -25,12 +26,25 @@ void UPointsComponent::BeginPlay()
 }
 
 
+void UPointsComponent::OnRep_Points()
+{
+	PointsBPEvent(Points);
+}
+
 // Called every frame
 void UPointsComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	// ...
+}
+
+void UPointsComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
+	DOREPLIFETIME(UPointsComponent, Points);
+
 }
 
 void UPointsComponent::AddPoints(int Point)

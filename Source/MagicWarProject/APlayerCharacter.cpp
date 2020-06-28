@@ -50,14 +50,7 @@ void AAPlayerCharacter::CallShoot()
 		return;
 	}
 
-	if (Role == ENetRole::ROLE_Authority)
-	{
-		ServerShoot();
-	}
-	else 
-	{
-		ClientShoot();
-	}
+	ServerShoot();
 }
 
 void AAPlayerCharacter::Shoot()

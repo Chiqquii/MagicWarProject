@@ -20,8 +20,11 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
-	UPROPERTY(BlueprintReadWrite)
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Points)
 	int Points;
+
+	UFUNCTION()
+	void OnRep_Points();
 
 public:	
 	// Called every frame
@@ -35,4 +38,7 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void AddPoints(int Point);
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void PointsBPEvent(int Point);
 };
