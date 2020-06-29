@@ -8,7 +8,6 @@ AAPlayerCharacter::AAPlayerCharacter()
 {
 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
 }
 
 // Called when the game starts or when spawned
@@ -35,7 +34,8 @@ void AAPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
-	PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &AAPlayerCharacter::CallShoot);
+	DECLARE_DELEGATE_OneParam(CallShoot, AAPlayerCharacter*);
+	PlayerInputComponent->BindAction<CallShoot>("Fire", IE_Pressed, this, &AAPlayerCharacter::CallShoot, this);
 
 	PlayerInputComponent->BindAxis("MoveForward", this, &AAPlayerCharacter::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &AAPlayerCharacter::MoveRight);
@@ -43,19 +43,17 @@ void AAPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 
 }
 
-void AAPlayerCharacter::CallShoot()
+void AAPlayerCharacter::CallShoot(AAPlayerCharacter* Character)
 {
 	if (CurrentWeapon == NULL)
-	{
 		return;
-	}
 
-	ServerShoot();
+	ServerShoot(Character);
 }
 
-void AAPlayerCharacter::Shoot()
+void AAPlayerCharacter::Shoot(AAPlayerCharacter* Character)
 {
-	CurrentWeapon->Fire(this);
+	Character->CurrentWeapon->Fire(Character);
 	NetMulticastShoot();
 }
 
@@ -74,24 +72,13 @@ void AAPlayerCharacter::CameraRotation(float Axis)
 	AddControllerYawInput(Axis);
 }
 
-void AAPlayerCharacter::ClientShoot_Implementation()
+void AAPlayerCharacter::ServerShoot_Implementation(AAPlayerCharacter* Character)
 {
-	//Shoot();
-
-	ServerShoot();
-}
-
-void AAPlayerCharacter::ServerShoot_Implementation()
-{
-	Shoot();
-
-	//NetMulticastShoot();
+	Shoot(Character);
 }
 
 void AAPlayerCharacter::NetMulticastShoot_Implementation()
 {
-// 	if (Role == ENetRole::ROLE_Authority)
-// 		return;
 
 	ViewAttack();
 }

@@ -20,11 +20,8 @@ public:
 	// Sets default values for this character's properties
 	AAPlayerCharacter();
 
-	UFUNCTION(Client, Reliable)
-		void ClientShoot();
-
 	UFUNCTION(Server, Reliable)
-		void ServerShoot();
+		void ServerShoot(AAPlayerCharacter* Character);
 
 	UFUNCTION(NetMulticast, Reliable)
 		void NetMulticastShoot();
@@ -47,8 +44,8 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	void CallShoot();
-	void Shoot();
+	void CallShoot(AAPlayerCharacter* Character);
+	void Shoot(AAPlayerCharacter* Character);
 	void MoveForward(float Axis);
 	void MoveRight(float Axis);
 	void CameraRotation(float Axis);

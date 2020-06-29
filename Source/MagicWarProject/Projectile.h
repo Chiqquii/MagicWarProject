@@ -45,6 +45,6 @@ public:
 	UFUNCTION(BlueprintCallable)
 		void HitBullet(UPrimitiveComponent* OverlappedComp, AActor* OtherActor);
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Replicated)
 		class AAPlayerCharacter* Character;
 };
