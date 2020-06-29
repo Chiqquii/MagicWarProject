@@ -26,7 +26,7 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 		USkeletalMeshComponent* MeshComp;
 
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Projectile")
+	UPROPERTY(BlueprintReadWrite, Replicated, Category = "Projectile")
 		TSubclassOf<class AProjectile> ProjectileClass;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Projectile")

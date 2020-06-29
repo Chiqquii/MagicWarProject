@@ -4,6 +4,7 @@
 #include "WeaponMagic.h"
 #include "Engine/Engine.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "Net/UnrealNetwork.h"
 
 // Sets default values
 AWeaponMagic::AWeaponMagic()
@@ -20,6 +21,13 @@ void AWeaponMagic::BeginPlay()
 {
 	Super::BeginPlay();
 	
+}
+
+void AWeaponMagic::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+	UE_LOG(LogTemp, Warning, TEXT("ProjectileClass"));
+	DOREPLIFETIME(AWeaponMagic, ProjectileClass);
 }
 
 void AWeaponMagic::Fire(AAPlayerCharacter* character)
@@ -42,6 +50,7 @@ void AWeaponMagic::FireActor(AActor* Actor)
 {
 	if (ProjectileClass)
 	{
+		UE_LOG(LogTemp, Warning, TEXT("SpawnPROJECTILEClass"));
 		GetWorld()->SpawnActor<AProjectile>(ProjectileClass, GetActorLocation() + Actor->GetActorForwardVector() * DistSpawnBullet, UKismetMathLibrary::MakeRotFromXZ(Actor->GetActorForwardVector(), GetActorUpVector()));
 	}
 }

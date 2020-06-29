@@ -56,7 +56,7 @@ void AAPlayerCharacter::CallShoot()
 void AAPlayerCharacter::Shoot()
 {
 	CurrentWeapon->Fire(this);
-	ViewAttack();
+	NetMulticastShoot();
 }
 
 void AAPlayerCharacter::MoveForward(float Axis)
@@ -85,13 +85,13 @@ void AAPlayerCharacter::ServerShoot_Implementation()
 {
 	Shoot();
 
-	NetMulticastShoot();
+	//NetMulticastShoot();
 }
 
 void AAPlayerCharacter::NetMulticastShoot_Implementation()
 {
-	if (Role == ENetRole::ROLE_Authority)
-		return;
+// 	if (Role == ENetRole::ROLE_Authority)
+// 		return;
 
-	Shoot();
+	ViewAttack();
 }

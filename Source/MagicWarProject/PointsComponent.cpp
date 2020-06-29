@@ -44,7 +44,6 @@ void UPointsComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Out
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME(UPointsComponent, Points);
-
 }
 
 void UPointsComponent::AddPoints(int Point)
