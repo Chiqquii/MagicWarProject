@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "UUiUserWidget.h"
+#include "DamageableComponent.h"
 #include "DamageableUI.generated.h"
 
 /**
@@ -16,6 +17,6 @@ class MAGICWARPROJECT_API UDamageableUI : public UUUiUserWidget
 	
 public:
 
-	UFUNCTION(BlueprintImplementableEvent, Category = "Settings")
-		void ChangeHealth(float Health, float MaxHealth);
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	class UDamageableComponent* DamageableComponent;
 };

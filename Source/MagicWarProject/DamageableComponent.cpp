@@ -21,18 +21,6 @@ void UDamageableComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
-// 	auto Owner = GetOwner();
-// 	if (Owner)
-// 	{
-// 		DamageableUI = CreateWidget<UDamageableUI>(Owner, DamageableUIClass, "DamageableUI");
-// 
-// 		if (DamageableUI)
-// 		{
-// 			DamageableUI->AddToViewport();
-// 			DamageableUI->SetVisibility(ESlateVisibility::Hidden);
-// 		}
-// 	}
-
 
 	ResetLife();
 }
@@ -49,11 +37,6 @@ void UDamageableComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 void UDamageableComponent::Damage(float damage)
 {
 	Health -= damage;
-
-	if (DamageableUI)
-	{
-		DamageableUI->ChangeHealth(Health, MaxHealth);
-	}
 
 	if (Health <= 0) 
 	{
@@ -104,10 +87,5 @@ void UDamageableComponent::Respawn()
 void UDamageableComponent::ResetLife()
 {
 	Health = MaxHealth;
-
-	if (DamageableUI)
-	{
-		DamageableUI->ChangeHealth(Health, MaxHealth);
-	}
 }
 

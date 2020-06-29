@@ -33,7 +33,7 @@ public:
 		float MaxHealth;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Settings")
-		UDamageableUI* DamageableUI;
+	class UDamageableUI* DamageableUI;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Settings")
 	class URespawnComponent* RespawnComponent;
