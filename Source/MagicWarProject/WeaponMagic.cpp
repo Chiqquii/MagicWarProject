@@ -41,7 +41,9 @@ void AWeaponMagic::Fire(AAPlayerCharacter* character)
 		if (ProjectileClass != nullptr) 
 		{
 			auto Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileClass, GetActorLocation() + character->GetActorForwardVector() * DistSpawnBullet, character->GetActorRotation());
-			Projectile->Character = character;
+			
+			if(Projectile)
+				Projectile->Character = character;
 		}
 	}
 }

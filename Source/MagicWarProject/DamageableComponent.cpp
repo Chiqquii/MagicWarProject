@@ -4,6 +4,7 @@
 #include "DamageableComponent.h"
 #include "MagicWarGameMode.h"
 #include "Engine/Engine.h"
+#include "Net/UnrealNetwork.h"
 
 // Sets default values for this component's properties
 UDamageableComponent::UDamageableComponent()
@@ -13,6 +14,14 @@ UDamageableComponent::UDamageableComponent()
 	PrimaryComponentTick.bCanEverTick = true;
 
 	// ...
+}
+
+void UDamageableComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
+	DOREPLIFETIME(UDamageableComponent, Health);
+
 }
 
 
