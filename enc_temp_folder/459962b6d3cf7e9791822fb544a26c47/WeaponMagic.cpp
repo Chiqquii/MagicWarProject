@@ -26,7 +26,7 @@ void AWeaponMagic::BeginPlay()
 void AWeaponMagic::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
-
+	UE_LOG(LogTemp, Warning, TEXT("ProjectileClass"));
 	DOREPLIFETIME(AWeaponMagic, ProjectileClass);
 }
 
@@ -40,7 +40,6 @@ void AWeaponMagic::Fire(AAPlayerCharacter* character)
 
 		if (ProjectileClass != nullptr) 
 		{
-			UE_LOG(LogTemp, Warning, TEXT("Spawn projectile player"));
 			auto Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileClass, GetActorLocation() + character->GetActorForwardVector() * DistSpawnBullet, character->GetActorRotation());
 			
 			if(Projectile)
@@ -53,7 +52,7 @@ void AWeaponMagic::FireActor(AActor* Actor)
 {
 	if (ProjectileClass)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Spawn projectile enemy"));
+		UE_LOG(LogTemp, Warning, TEXT("SpawnPROJECTILEClass"));
 		GetWorld()->SpawnActor<AProjectile>(ProjectileClass, GetActorLocation() + Actor->GetActorForwardVector() * DistSpawnBullet, UKismetMathLibrary::MakeRotFromXZ(Actor->GetActorForwardVector(), GetActorUpVector()));
 	}
 }
