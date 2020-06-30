@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "WeaponMagic.h"
+#include "Net/UnrealNetwork.h"
 #include "EnemyCharacter.generated.h"
 
 UCLASS()
@@ -16,22 +17,30 @@ public:
 	// Sets default values for this character's properties
 	AEnemyCharacter();
 
+	UFUNCTION(Server, Reliable)
+		void ServerShootRPC(AWeaponMagic* CurrentWeapon, AActor* Actor);
+
+	UFUNCTION(Server, Reliable)
+		void GetTargetServerRPC();
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	UPROPERTY(Replicated, EditDefaultsOnly)
+	class AActor* Target;
 
-	AActor* Target;
-
-	UPROPERTY()
+	UPROPERTY(EditDefaultsOnly)
 		float CounterShoot;
 
 	UPROPERTY(EditDefaultsOnly)
 		float RequiredDistanceToTarget;
 
-	float DistanceToCurrentTarget;
+	UPROPERTY(EditDefaultsOnly)
+		float DistanceToCurrentTarget;
 
-	bool CanMove;
+	UPROPERTY(EditDefaultsOnly)
+		bool CanMove;
 
 	UPROPERTY(EditDefaultsOnly)
 	float StartChasingPlayer;
@@ -49,9 +58,7 @@ public:
 	UPROPERTY(EditAnywhere)
 		float DelayShoot;
 
-	AActor* GetTarget();
-	void Damage(float damage);
-	void Kill();
-	void Shoot();
+	UFUNCTION()
+		void Shoot(AWeaponMagic* CurrentWeapon, AActor* Actor);
 
 };

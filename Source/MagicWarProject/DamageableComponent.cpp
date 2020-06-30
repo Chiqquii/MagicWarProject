@@ -4,7 +4,6 @@
 #include "DamageableComponent.h"
 #include "MagicWarGameMode.h"
 #include "Engine/Engine.h"
-#include "Net/UnrealNetwork.h"
 
 // Sets default values for this component's properties
 UDamageableComponent::UDamageableComponent()
@@ -21,6 +20,7 @@ void UDamageableComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>&
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME(UDamageableComponent, Health);
+	DOREPLIFETIME(UDamageableComponent, DeathActor);
 
 }
 
@@ -59,22 +59,31 @@ void UDamageableComponent::Kill()
 {
 	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("KILL"));
 
-	AMagicWarGameMode* GM = Cast<AMagicWarGameMode>(GetWorld()->GetAuthGameMode());
-	if (GM)
-	{
-		GM->OnActorKilled.Broadcast();
-	}
+	DeathNetMulticastRPC();
 
-	GetOwner()->Destroy(true);
+// 	AMagicWarGameMode* GM = Cast<AMagicWarGameMode>(GetWorld()->GetAuthGameMode());
+// 	if (GM)
+// 	{
+// 		GM->OnActorKilled.Broadcast();
+// 	}
+// 
+// 	GetOwner()->Destroy(true);
+}
+
+void UDamageableComponent::DeathNetMulticastRPC_Implementation()
+{
+	DeathActor = true;
+	ViewDeath();
 }
 
 void UDamageableComponent::Respawn()
 {
-	if (RespawnComponent == nullptr || RespawnComponent->CounterRespawn >= RespawnComponent->MaxRespawn)
-	{
-		Kill();
-		return;
-	}
+	Kill();
+// 	if (RespawnComponent == nullptr || RespawnComponent->CounterRespawn >= RespawnComponent->MaxRespawn)
+// 	{
+// 		Kill();
+// 		return;
+// 	}
 
 // 	RespawnComponent->CounterRespawn++;
 // 	RespawnComponent->RespawnUI->ActiveCounter();
@@ -90,7 +99,7 @@ void UDamageableComponent::Respawn()
 // 
 // 	RespawnComponent->RespawnUI->FinishCounter();
 
-	ResetLife();
+/*	ResetLife();*/
 }
 
 void UDamageableComponent::ResetLife()

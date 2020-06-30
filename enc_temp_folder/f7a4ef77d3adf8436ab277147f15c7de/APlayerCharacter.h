@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
-#include "Unit.h"
 #include "WeaponMagic.h"
 #include "DamageableComponent.h"
 #include "PointsComponent.h"
@@ -12,7 +11,7 @@
 #include "APlayerCharacter.generated.h"
 
 UCLASS()
-class MAGICWARPROJECT_API AAPlayerCharacter : public AUnit
+class MAGICWARPROJECT_API AAPlayerCharacter : public ACharacter
 {
 	GENERATED_BODY()
 
@@ -53,4 +52,13 @@ public:
 
 	UFUNCTION(BlueprintImplementableEvent)
 	void ViewAttack();
+
+	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
+		class UDamageableComponent* Damageable;
+
+	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
+		class UPointsComponent* Points;
+
+	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
+		class URespawnComponent* Respawn;
 };

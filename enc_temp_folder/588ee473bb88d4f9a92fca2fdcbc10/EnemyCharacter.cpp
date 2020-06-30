@@ -15,20 +15,23 @@ AEnemyCharacter::AEnemyCharacter()
 
 }
 
+void AEnemyCharacter::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
+	DOREPLIFETIME(AEnemyCharacter, Target);
+
+}
+
 // Called when the game starts or when spawned
 void AEnemyCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
-	if (Role == ROLE_Authority)
-	{
-		Target = GetTarget();
-		RequiredDistanceToTarget = 300;
-		DistanceToCurrentTarget = 0;
-		CanMove = true;
-	}
-
-
+	GetTargetServerRPC();
+	RequiredDistanceToTarget = 300;
+	DistanceToCurrentTarget = 0;
+	CanMove = true;
 }
 
 // Called every frame
@@ -65,13 +68,21 @@ void AEnemyCharacter::Tick(float DeltaTime)
 	{
 		if (DistanceToCurrentTarget > StartChasingPlayer)
 			CanMove = true;
-		else if(Weapon)
-			Shoot();
+		else if (Weapon)
+		{
+			CounterShoot += GetWorld()->GetDeltaSeconds();
+
+			if (CounterShoot >= DelayShoot) 
+			{
+				CounterShoot = 0;
+				ServerShootRPC(Weapon, this);
+			}
+		}
 	}
 }
 
 
-AActor* AEnemyCharacter::GetTarget()
+void AEnemyCharacter::GetTargetServerRPC_Implementation()
 {
 	TArray<AActor*> AllPlayers;
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AAPlayerCharacter::StaticClass(), AllPlayers);
@@ -98,27 +109,18 @@ AActor* AEnemyCharacter::GetTarget()
 		}
 	}
 
-	return CurrentTarget;
+	Target = CurrentTarget;
 }
 
-void AEnemyCharacter::Damage(float damage)
-{
 
+
+void AEnemyCharacter::ServerShootRPC_Implementation(AWeaponMagic* CurrentWeapon, AActor* Actor)
+{
+	Shoot(CurrentWeapon, Actor);
 }
 
-void AEnemyCharacter::Kill()
+void AEnemyCharacter::Shoot(AWeaponMagic* CurrentWeapon, AActor* Actor)
 {
-
-}
-
-void AEnemyCharacter::Shoot()
-{
-	CounterShoot += GetWorld()->GetDeltaSeconds();
-
-	if (CounterShoot < DelayShoot) return;
-
-	CounterShoot = 0;
-
-	Weapon->FireActor(this);
+	CurrentWeapon->FireActor(Actor);
 }
 

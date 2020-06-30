@@ -6,6 +6,7 @@
 #include "Components/ActorComponent.h"
 #include "DamageableUI.h"
 #include "RespawnComponent.h"
+#include "Net/UnrealNetwork.h"
 #include "DamageableComponent.generated.h"
 
 
@@ -18,6 +19,9 @@ public:
 	// Sets default values for this component's properties
 	UDamageableComponent();
 
+	UFUNCTION(NetMulticast, Reliable)
+		void DeathNetMulticastRPC();
+
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
@@ -28,6 +32,9 @@ protected:
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+
+	UPROPERTY(BlueprintReadWrite, Replicated)
+		bool DeathActor;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Settings")
 		float MaxHealth;
@@ -49,4 +56,7 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void ResetLife();
+
+	UFUNCTION(BlueprintImplementableEvent)
+		void ViewDeath();
 };

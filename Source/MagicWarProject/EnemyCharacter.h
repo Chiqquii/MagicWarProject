@@ -5,11 +5,12 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "WeaponMagic.h"
+#include "Unit.h"
 #include "Net/UnrealNetwork.h"
 #include "EnemyCharacter.generated.h"
 
 UCLASS()
-class MAGICWARPROJECT_API AEnemyCharacter : public ACharacter
+class MAGICWARPROJECT_API AEnemyCharacter : public AUnit
 {
 	GENERATED_BODY()
 
