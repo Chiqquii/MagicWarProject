@@ -45,9 +45,7 @@ void AAPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 
 void AAPlayerCharacter::CallShoot(AAPlayerCharacter* Character)
 {
-	if (Damageable && Damageable->DeathActor) return;
-
-	if (!CurrentWeapon)
+	if (DeathUnit || !CurrentWeapon)
 		return;
 
 	ServerShoot(Character);
@@ -61,21 +59,21 @@ void AAPlayerCharacter::Shoot(AAPlayerCharacter* Character)
 
 void AAPlayerCharacter::MoveForward(float Axis)
 {
-	if (Damageable && Damageable->DeathActor) return;
+	if (DeathUnit) return;
 
 	AddMovementInput(GetActorForwardVector(), Axis);
 }
 
 void AAPlayerCharacter::MoveRight(float Axis)
 {
-	if (Damageable && Damageable->DeathActor) return;
+	if (DeathUnit) return;
 
 	AddMovementInput(GetActorRightVector(), Axis);
 }
 
 void AAPlayerCharacter::CameraRotation(float Axis)
 {
-	if (Damageable && Damageable->DeathActor) return;
+	if (DeathUnit) return;
 
 	AddControllerYawInput(Axis);
 }
@@ -87,6 +85,5 @@ void AAPlayerCharacter::ServerShoot_Implementation(AAPlayerCharacter* Character)
 
 void AAPlayerCharacter::NetMulticastShoot_Implementation()
 {
-
 	ViewAttack();
 }

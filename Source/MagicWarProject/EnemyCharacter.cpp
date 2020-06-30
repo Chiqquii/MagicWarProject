@@ -39,13 +39,27 @@ void AEnemyCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	if (Target != NULL) 
+	if (DeathUnit) return;
+
+	if (Target) 
 	{
+		if (Target->DeathUnit)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("000 ENEMY no target"));
+			Target = NULL;
+			return;
+		}
+
 		DistanceToCurrentTarget = (GetActorLocation() - Target->GetActorLocation()).Size();
 
 		FVector forward = Target->GetActorLocation() - GetActorLocation();
 		FRotator Rot = UKismetMathLibrary::MakeRotFromXZ(forward, GetActorUpVector());
 		SetActorRotation(Rot);
+	}
+	else
+	{
+		GetTargetServerRPC();
+		return;
 	}
 
 	if (CanMove)
@@ -89,14 +103,19 @@ void AEnemyCharacter::GetTargetServerRPC_Implementation()
 
 
 	float DistanceToTarget = NULL;
-	AActor* CurrentTarget = nullptr;
+	AUnit* CurrentTarget = nullptr;
 
 	for (AActor* Actor : AllPlayers)
 	{
-		if (DistanceToTarget == NULL)
+		AUnit* CurrentActor = Cast<AUnit>(Actor);
+
+		if(!CurrentActor || CurrentActor->DeathUnit) 
+			break;
+
+		if (!DistanceToTarget)
 		{
 			DistanceToTarget = (Actor->GetActorLocation() - GetActorLocation()).Size();
-			CurrentTarget = Actor;
+			CurrentTarget = CurrentActor;
 		}
 		else
 		{
@@ -104,7 +123,7 @@ void AEnemyCharacter::GetTargetServerRPC_Implementation()
 			if (DistanceToTarget > CurrentActorDistance)
 			{
 				DistanceToTarget = CurrentActorDistance;
-				CurrentTarget = Actor;
+				CurrentTarget = CurrentActor;
 			}
 		}
 	}

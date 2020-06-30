@@ -29,7 +29,7 @@ protected:
 	virtual void BeginPlay() override;
 
 	UPROPERTY(Replicated, EditDefaultsOnly)
-	class AActor* Target;
+	class AUnit* Target;
 
 	UPROPERTY(EditDefaultsOnly)
 		float CounterShoot;

@@ -4,6 +4,7 @@
 #include "Projectile.h"
 #include "Templates/SubclassOf.h"
 #include "Net/UnrealNetwork.h"
+#include "Logging/LogMacros.h"
 
 // Sets default values
 AProjectile::AProjectile()
@@ -52,29 +53,32 @@ void AProjectile::DestroyBullet()
 
 void AProjectile::HitBullet(UPrimitiveComponent* OverlappedComp, AActor* OtherActor) 
 {
+
 	auto damageable = OtherActor->FindComponentByClass<UDamageableComponent>();
 
-
-	if (damageable) 
-	{
+	if (damageable)
 		damageable->Damage(Damage);
-	}
+		//HitDamageServerRPC(Damage, damageable);
 
 
-	if (Character)
+	if (Character && Character->Points)
 	{
-		if (Character->Points )
-		{
-			auto points = OtherActor->FindComponentByClass<UPointsComponent>();
+		auto points = OtherActor->FindComponentByClass<UPointsComponent>();
 
-			if (points)
-			{
-				Character->Points->AddPoints(points->PointsToGive);
-			}
+		if (points)
+		{
+			Character->Points->AddPoints(points->PointsToGive);
 		}
 	}
 
 
 	DestroyBullet();
+}
+
+void AProjectile::HitDamageServerRPC_Implementation(float HitDamage, UDamageableComponent* HitDamageable)
+{
+	FString fstringVar = HitDamageable->GetOwner()->GetName();
+	UE_LOG(LogTemp, Warning, TEXT("000 HIT DAMAGE, %s"), *fstringVar);
+	HitDamageable->Damage(HitDamage);
 }
 

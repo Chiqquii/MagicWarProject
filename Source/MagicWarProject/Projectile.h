@@ -7,6 +7,8 @@
 #include "DamageableComponent.h"
 #include "PointsComponent.h"
 #include "APlayerCharacter.h"
+#include "Unit.h"
+#include "Net/UnrealNetwork.h"
 #include "Projectile.generated.h"
 
 UCLASS()
@@ -17,6 +19,9 @@ class MAGICWARPROJECT_API AProjectile : public AActor
 public:	
 	// Sets default values for this actor's properties
 	AProjectile();
+
+	UFUNCTION(Server, Reliable)
+		void HitDamageServerRPC(float HitDamage, UDamageableComponent* HitDamageable);
 
 protected:
 	// Called when the game starts or when spawned

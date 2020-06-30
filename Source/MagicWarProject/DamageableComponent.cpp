@@ -4,6 +4,8 @@
 #include "DamageableComponent.h"
 #include "MagicWarGameMode.h"
 #include "Engine/Engine.h"
+#include "Logging/LogMacros.h"
+#include "Net/UnrealNetwork.h"
 
 // Sets default values for this component's properties
 UDamageableComponent::UDamageableComponent()
@@ -20,8 +22,6 @@ void UDamageableComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>&
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME(UDamageableComponent, Health);
-	DOREPLIFETIME(UDamageableComponent, DeathActor);
-
 }
 
 
@@ -30,6 +30,11 @@ void UDamageableComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
+	auto Owner = Cast<AUnit>(GetOwner());
+	if (Owner) {
+		Owner->Damageable = this;
+		Unit = Owner;
+	}
 
 	ResetLife();
 }
@@ -45,21 +50,33 @@ void UDamageableComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 
 void UDamageableComponent::Damage(float damage)
 {
+	if (Unit && Unit->DeathUnit) return;
+
+	FString fstringVar = Unit->GetName();
+	FString fstringOwner = GetOwner()->GetName();
+	UE_LOG(LogTemp, Warning, TEXT("000 UNIT DAMAGE, %s"), *fstringVar);
+	UE_LOG(LogTemp, Warning, TEXT("000 OWNER DAMAGE, %s"), *fstringOwner);
+
 	Health -= damage;
 
 	if (Health <= 0) 
 	{
 		Health = 0;
 
-		Respawn();
+		Kill();
 	}
 }
 
 void UDamageableComponent::Kill()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("KILL"));
+	FString fstringVar = Unit->GetName();
+	UE_LOG(LogTemp, Warning, TEXT("000 Text, %s"), *fstringVar);
 
-	DeathNetMulticastRPC();
+	if (Unit) {
+		Unit->DeathUnit = true;
+		DeathServerRPC(Unit);
+		DeathNetMulticastRPC(Unit);
+	}
 
 // 	AMagicWarGameMode* GM = Cast<AMagicWarGameMode>(GetWorld()->GetAuthGameMode());
 // 	if (GM)
@@ -70,40 +87,29 @@ void UDamageableComponent::Kill()
 // 	GetOwner()->Destroy(true);
 }
 
-void UDamageableComponent::DeathNetMulticastRPC_Implementation()
+void UDamageableComponent::DeathServerRPC_Implementation(AUnit* UnitParam)
 {
-	DeathActor = true;
-	ViewDeath();
+	UE_LOG(LogTemp, Warning, TEXT("000 KILL"));
+
+	if (UnitParam->Respawn)
+		UnitParam->Respawn->CheckRespawn();
 }
 
-void UDamageableComponent::Respawn()
+void UDamageableComponent::DeathNetMulticastRPC_Implementation(AUnit* UnitParam)
 {
-	Kill();
-// 	if (RespawnComponent == nullptr || RespawnComponent->CounterRespawn >= RespawnComponent->MaxRespawn)
-// 	{
-// 		Kill();
-// 		return;
-// 	}
+// 	if (UnitParam->Role == ENetRole::ROLE_Authority)
+// 		return;
 
-// 	RespawnComponent->CounterRespawn++;
-// 	RespawnComponent->RespawnUI->ActiveCounter();
-// 
-// 	auto Counter = 0;
-// 
-// 	while (RespawnComponent->CounterRespawn < RespawnComponent->MaxRespawn)
-// 	{
-// 		Counter += GetWorld()->DeltaTimeSeconds;
-// 
-// 		RespawnComponent->RespawnUI->CounterRespawn(Counter);
-// 	}
-// 
-// 	RespawnComponent->RespawnUI->FinishCounter();
-
-/*	ResetLife();*/
+	UnitParam->ViewDeath();
 }
+
 
 void UDamageableComponent::ResetLife()
 {
+	UE_LOG(LogTemp, Warning, TEXT("000 Reset"));
 	Health = MaxHealth;
+
+	if(Unit)
+		Unit->DeathUnit = false;
 }
 

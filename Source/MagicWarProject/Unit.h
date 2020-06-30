@@ -4,6 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "DamageableComponent.h"
+#include "PointsComponent.h"
+#include "RespawnComponent.h"
 #include "Unit.generated.h"
 
 UCLASS()
@@ -26,13 +29,21 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
+	UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Replicated)
 		class UDamageableComponent* Damageable;
 
-	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
+	UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Replicated)
 		class UPointsComponent* Points;
 
-	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
+	UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Replicated)
 		class URespawnComponent* Respawn;
 
+	UFUNCTION(BlueprintImplementableEvent)
+		void ViewDeath();
+
+	UFUNCTION(BlueprintImplementableEvent)
+		void ViewRespawn();
+
+	UPROPERTY(BlueprintReadWrite, Replicated)
+		bool DeathUnit;
 };
