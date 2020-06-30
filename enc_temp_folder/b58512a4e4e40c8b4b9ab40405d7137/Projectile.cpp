@@ -3,7 +3,6 @@
 
 #include "Projectile.h"
 #include "Templates/SubclassOf.h"
-#include "Net/UnrealNetwork.h"
 
 // Sets default values
 AProjectile::AProjectile()
@@ -18,14 +17,6 @@ void AProjectile::BeginPlay()
 {
 	Super::BeginPlay();
 	
-}
-
-void AProjectile::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
-{
-	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
-
-	DOREPLIFETIME(AProjectile, Character);
-
 }
 
 // Called every frame
