@@ -24,34 +24,58 @@ void URespawnComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Ou
 
 void URespawnComponent::RespawnServerRPC_Implementation(AUnit* UnitParam)
 {
+	UE_LOG(LogTemp, Warning, TEXT("000 START RESPAWN"));
+
 	if (UnitParam->Respawn)
 		UnitParam->Respawn->CounterRespawn++;
+
+
 }
 
 void URespawnComponent::RespawnNetMulticastRPC_Implementation(AUnit* UnitParam)
 {
-	if (UnitParam->Damageable) 
-		UnitParam->Damageable->ResetLife();
-
 	UnitParam->ViewRespawn();
 }
 
 void URespawnComponent::CheckRespawn()
 {
-	if (CounterRespawn >= MaxRespawn) 
-		return;
+	UE_LOG(LogTemp, Warning, TEXT("000 Check respawn"));
+
+	if (CounterRespawn >= MaxRespawn) return;
 
 	CounterRespawn++;
-
+	//FTimerDelegate TimerDel;
 	FTimerHandle TimerHandle;
+
+	//TimerDel.BindUFunction(this, FName("FinishRespawn"), Unit);
+
 	GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &URespawnComponent::FinishRespawn, TimeWaitRespawn, false);
 }
 
 void URespawnComponent::FinishRespawn()
 {
+	FString fstringOwner = Unit->GetName();
+	UE_LOG(LogTemp, Warning, TEXT("000 Pre RESPAWN UNIT, %s"), *fstringOwner);
+
+
+
+	if (Unit->Damageable) {
+		UE_LOG(LogTemp, Warning, TEXT("000 RESETLiFE"));
+		Unit->Damageable->ResetLife();
+	}
+/*	FinishRespawnServerRPC(Unit);*/
+
 	RespawnNetMulticastRPC(Unit);
 }
 
+
+void URespawnComponent::FinishRespawnServerRPC_Implementation(AUnit* UnitParam)
+{
+	if (UnitParam->Damageable) {
+		UE_LOG(LogTemp, Warning, TEXT("000 RESETLiFE"));
+		UnitParam->Damageable->ResetLife();
+	}
+}
 
 // Called when the game starts
 void URespawnComponent::BeginPlay()

@@ -89,7 +89,7 @@ void AEnemyCharacter::Tick(float DeltaTime)
 			if (CounterShoot >= DelayShoot) 
 			{
 				CounterShoot = 0;
-				ServerShootRPC(Weapon, this);
+				ServerShootRPC(this);
 			}
 		}
 	}
@@ -133,13 +133,8 @@ void AEnemyCharacter::GetTargetServerRPC_Implementation()
 
 
 
-void AEnemyCharacter::ServerShootRPC_Implementation(AWeaponMagic* CurrentWeapon, AActor* Actor)
+void AEnemyCharacter::ServerShootRPC_Implementation(AEnemyCharacter* CurrentEnemy)
 {
-	Shoot(CurrentWeapon, Actor);
-}
-
-void AEnemyCharacter::Shoot(AWeaponMagic* CurrentWeapon, AActor* Actor)
-{
-	CurrentWeapon->FireActor(Actor);
+	CurrentEnemy->Weapon->FireActor(CurrentEnemy);
 }
 

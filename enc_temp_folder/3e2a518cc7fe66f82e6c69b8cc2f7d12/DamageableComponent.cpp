@@ -106,12 +106,11 @@ void UDamageableComponent::DeathNetMulticastRPC_Implementation(AUnit* UnitParam)
 
 void UDamageableComponent::ResetLife()
 {
-	Health += MaxHealth;
-
 	if (Unit) {
 		FString fstringVar = Unit->GetName();
-		UE_LOG(LogTemp, Warning, TEXT("000 RESET LIFE, %s %d"), *fstringVar, Health);
+		UE_LOG(LogTemp, Warning, TEXT("000 RESET LIFE, %s"), *fstringVar);
 	}
+	Health = MaxHealth;
 
 	if(Unit)
 		Unit->DeathUnit = false;

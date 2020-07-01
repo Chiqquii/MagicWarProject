@@ -4,60 +4,56 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
-#include "DamageableUI.h"
-#include "RespawnComponent.h"
-#include "Net/UnrealNetwork.h"
+#include "RespawnUI.h"
 #include "Unit.h"
-#include "DamageableComponent.generated.h"
+#include "Net/UnrealNetwork.h"
+#include "RespawnComponent.generated.h"
 
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
-class MAGICWARPROJECT_API UDamageableComponent : public UActorComponent
+class MAGICWARPROJECT_API URespawnComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
 public:	
 	// Sets default values for this component's properties
-	UDamageableComponent();
+	URespawnComponent();
 
 	UFUNCTION(Server, Reliable)
-		void DamageServerRPC(float DamageParam);
-
-	UFUNCTION(Server, Reliable)
-		void DeathServerRPC(AUnit* UnitParam);
+	void RespawnServerRPC(AUnit* UnitParam);
 
 	UFUNCTION(NetMulticast, Reliable)
-		void DeathNetMulticastRPC(AUnit* UnitParam);
+	void RespawnNetMulticastRPC(AUnit* UnitParam);
+
+	UFUNCTION()
+	void CheckRespawn();
+
+	UFUNCTION(Server, Reliable)
+	void FinishRespawnServerRPC(AUnit* UnitParam);
 
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
-	UPROPERTY(BlueprintReadWrite, Replicated)
-		float Health;
+	UFUNCTION()
+		void FinishRespawn();
 
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Replicated, Category = "Settings")
-		float MaxHealth;
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Settings")
 		class AUnit* Unit;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Settings")
-	class UDamageableUI* DamageableUI;
+		URespawnUI* RespawnUI;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Settings")
-	class URespawnComponent* RespawnComponent;
+	float TimeWaitRespawn;
 
-	UFUNCTION(BlueprintCallable)
-	void Damage(float damage);
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, Category = "Settings")
+	int CounterRespawn;
 
-	UFUNCTION(BlueprintCallable)
-	void Kill();
-
-	UFUNCTION(BlueprintCallable)
-	void ResetLife();
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, Category = "Settings")
+	int MaxRespawn;
 };

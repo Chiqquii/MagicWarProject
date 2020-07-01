@@ -28,12 +28,12 @@ public:
 	UFUNCTION()
 	void CheckRespawn();
 
-	UFUNCTION()
-	void Respawn(AUnit* UnitParam);
-
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
+
+	UFUNCTION()
+		void FinishRespawn();
 
 public:	
 	// Called every frame
@@ -48,9 +48,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Settings")
 	float TimeWaitRespawn;
 
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Settings")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, Category = "Settings")
 	int CounterRespawn;
 
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Settings")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, Category = "Settings")
 	int MaxRespawn;
 };

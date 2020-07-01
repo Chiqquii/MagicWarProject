@@ -19,7 +19,7 @@ public:
 	AEnemyCharacter();
 
 	UFUNCTION(Server, Reliable)
-		void ServerShootRPC(AWeaponMagic* CurrentWeapon, AActor* Actor);
+		void ServerShootRPC(AEnemyCharacter* CurrentEnemy);
 
 	UFUNCTION(Server, Reliable)
 		void GetTargetServerRPC();
@@ -58,8 +58,4 @@ public:
 
 	UPROPERTY(EditAnywhere)
 		float DelayShoot;
-
-	UFUNCTION()
-		void Shoot(AWeaponMagic* CurrentWeapon, AActor* Actor);
-
 };
