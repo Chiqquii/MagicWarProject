@@ -45,12 +45,35 @@ void URespawnComponent::CheckRespawn()
 
 	FTimerHandle TimerHandle;
 	GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &URespawnComponent::FinishRespawn, TimeWaitRespawn, false);
+	ChangeUI(true);
+// 	if (RespawnUI) 
+// 	{
+// 		FString fstringVar = Unit->GetName();
+// 		UE_LOG(LogTemp, Warning, TEXT("000 ACTIVE COUNTER UI, %s"), *fstringVar);
+// 		RespawnUI->ActiveCounter(TimeWaitRespawn);
+// 	}
 }
 
 void URespawnComponent::FinishRespawn()
 {
+	ChangeUI(false);
 	RespawnNetMulticastRPC(Unit);
 }
+
+void URespawnComponent::ChangeUI(bool ActiveUIParam)
+{
+	if (RespawnUI) {
+		FString fstringVar = GetOwner()->GetName();
+		UE_LOG(LogTemp, Warning, TEXT("000 COUNTER UI, %s"), *fstringVar);
+
+		if (ActiveUIParam)
+			RespawnUI->ActiveCounter(TimeWaitRespawn);
+		else
+			RespawnUI->FinishCounter();
+	}
+}
+
+
 
 
 // Called when the game starts

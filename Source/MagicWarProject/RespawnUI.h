@@ -17,10 +17,7 @@ class MAGICWARPROJECT_API URespawnUI : public UUUiUserWidget
 public:
 
 	UFUNCTION(BlueprintImplementableEvent, Category = "Settings")
-		void ActiveCounter();
-
-	UFUNCTION(BlueprintImplementableEvent, Category = "Settings")
-		void CounterRespawn(float Time);
+		void ActiveCounter(float MaxTimeParam);
 
 	UFUNCTION(BlueprintImplementableEvent, Category = "Settings")
 		void FinishCounter();

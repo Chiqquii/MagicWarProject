@@ -65,11 +65,6 @@ void UDamageableComponent::Damage(float damage)
 	}
 }
 
-void UDamageableComponent::DamageServerRPC_Implementation(float DamageParam)
-{
-
-}
-
 void UDamageableComponent::Kill()
 {
 	FString fstringVar = Unit->GetName();
@@ -80,14 +75,6 @@ void UDamageableComponent::Kill()
 		DeathServerRPC(Unit);
 		DeathNetMulticastRPC(Unit);
 	}
-
-// 	AMagicWarGameMode* GM = Cast<AMagicWarGameMode>(GetWorld()->GetAuthGameMode());
-// 	if (GM)
-// 	{
-// 		GM->OnActorKilled.Broadcast();
-// 	}
-// 
-// 	GetOwner()->Destroy(true);
 }
 
 void UDamageableComponent::DeathServerRPC_Implementation(AUnit* UnitParam)

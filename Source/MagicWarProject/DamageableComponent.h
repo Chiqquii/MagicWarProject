@@ -21,9 +21,6 @@ public:
 	UDamageableComponent();
 
 	UFUNCTION(Server, Reliable)
-		void DamageServerRPC(float DamageParam);
-
-	UFUNCTION(Server, Reliable)
 		void DeathServerRPC(AUnit* UnitParam);
 
 	UFUNCTION(NetMulticast, Reliable)

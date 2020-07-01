@@ -21,24 +21,6 @@ protected:
 	
 public:
 
-// 	UFUNCTION(Client, Reliable)
-// 	void ClientTimer();
-// 
-// 	UFUNCTION(Server, Reliable)
-// 	void ServerTimer();
-// 
-// 	UFUNCTION(NetMulticast, Reliable)
-// 	void NetMulticastTimer();
-
-	UFUNCTION(BlueprintCallable)
-	void CounterTime(float DeltaTime);
-
-	UFUNCTION(BlueprintCallable)
-	bool Respawn(class URespawnComponent* RespawnComponent);
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float TimeRespawn;
-
 	UPROPERTY(BlueprintAssignable)
 	FOnActorKilled OnActorKilled;
 };

@@ -22,6 +22,9 @@ public:
 	UFUNCTION(Server, Reliable)
 	void RespawnServerRPC(AUnit* UnitParam);
 
+	UFUNCTION()
+	void ChangeUI(bool ActiveUIParam);
+
 	UFUNCTION(NetMulticast, Reliable)
 	void RespawnNetMulticastRPC(AUnit* UnitParam);
 
@@ -40,10 +43,10 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Settings")
-		class AUnit* Unit;
+	class AUnit* Unit;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Settings")
-		URespawnUI* RespawnUI;
+	class URespawnUI* RespawnUI;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Settings")
 	float TimeWaitRespawn;
