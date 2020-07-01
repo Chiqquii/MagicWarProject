@@ -19,14 +19,14 @@ public:
 	// Sets default values for this component's properties
 	URespawnComponent();
 
-	UFUNCTION(Server, Reliable)
-	void RespawnServerRPC(AUnit* UnitParam);
-
 	UFUNCTION()
 	void ChangeUI(bool ActiveUIParam);
 
 	UFUNCTION(NetMulticast, Reliable)
 	void RespawnNetMulticastRPC(AUnit* UnitParam);
+
+	UFUNCTION(NetMulticast, Reliable)
+	void ActiveRespawnNetMulticastRPC(AUnit* UnitParam);
 
 	UFUNCTION()
 	void CheckRespawn();
@@ -45,7 +45,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Settings")
 	class AUnit* Unit;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Settings")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Replicated, Category = "Settings")
 	class URespawnUI* RespawnUI;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Settings")

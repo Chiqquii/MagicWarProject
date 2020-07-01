@@ -3,6 +3,7 @@
 
 #include "RespawnComponent.h"
 #include "TimerManager.h"
+#include "RespawnUI.h"
 // Sets default values for this component's properties
 URespawnComponent::URespawnComponent()
 {
@@ -19,14 +20,9 @@ void URespawnComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Ou
 
 	DOREPLIFETIME(URespawnComponent, CounterRespawn);
 	DOREPLIFETIME(URespawnComponent, MaxRespawn);
+	DOREPLIFETIME(URespawnComponent, RespawnUI);
 }
 
-
-void URespawnComponent::RespawnServerRPC_Implementation(AUnit* UnitParam)
-{
-	if (UnitParam->Respawn)
-		UnitParam->Respawn->CounterRespawn++;
-}
 
 void URespawnComponent::RespawnNetMulticastRPC_Implementation(AUnit* UnitParam)
 {
@@ -34,6 +30,29 @@ void URespawnComponent::RespawnNetMulticastRPC_Implementation(AUnit* UnitParam)
 		UnitParam->Damageable->ResetLife();
 
 	UnitParam->ViewRespawn();
+
+	if (UnitParam->Role == ROLE_Authority) {
+
+		UE_LOG(LogTemp, Warning, TEXT("000 COUNTER UI SERVER"));
+	}
+	else
+		UE_LOG(LogTemp, Warning, TEXT("000 COUNTER UI CLIENT"));
+
+	if(UnitParam->Respawn && UnitParam->Respawn->RespawnUI)
+		UnitParam->Respawn->RespawnUI->FinishCounter();
+}
+
+void URespawnComponent::ActiveRespawnNetMulticastRPC_Implementation(AUnit* UnitParam)
+{
+	if (UnitParam->Role == ROLE_Authority) {
+
+		UE_LOG(LogTemp, Warning, TEXT("000 COUNTER UI SERVER"));
+	}
+	else
+		UE_LOG(LogTemp, Warning, TEXT("000 COUNTER UI CLIENT"));
+
+	if (UnitParam->Respawn && UnitParam->Respawn->RespawnUI)
+		UnitParam->Respawn->RespawnUI->ActiveCounter(UnitParam->Respawn->TimeWaitRespawn);
 }
 
 void URespawnComponent::CheckRespawn()
@@ -45,7 +64,7 @@ void URespawnComponent::CheckRespawn()
 
 	FTimerHandle TimerHandle;
 	GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &URespawnComponent::FinishRespawn, TimeWaitRespawn, false);
-	ChangeUI(true);
+	ActiveRespawnNetMulticastRPC(Unit);
 // 	if (RespawnUI) 
 // 	{
 // 		FString fstringVar = Unit->GetName();
@@ -56,15 +75,24 @@ void URespawnComponent::CheckRespawn()
 
 void URespawnComponent::FinishRespawn()
 {
-	ChangeUI(false);
+	//ChangeUI(false);
 	RespawnNetMulticastRPC(Unit);
 }
 
 void URespawnComponent::ChangeUI(bool ActiveUIParam)
 {
+	//URespawnUI* reUI = Cast<URespawnUI>(GetOwner()->GetComponentByClass(URespawnUI::StaticClass()));
+
 	if (RespawnUI) {
-		FString fstringVar = GetOwner()->GetName();
-		UE_LOG(LogTemp, Warning, TEXT("000 COUNTER UI, %s"), *fstringVar);
+// 		FString fstringVar = GetOwner()->Role.GetValue();
+// 		UE_LOG(LogTemp, Warning, TEXT("000 COUNTER UI, %s"), *fstringVar);
+
+		if (GetOwner()->Role == ROLE_Authority) {
+
+			UE_LOG(LogTemp, Warning, TEXT("000 COUNTER UI SERVER"));
+		}
+		else
+			UE_LOG(LogTemp, Warning, TEXT("000 COUNTER UI CLIENT"));
 
 		if (ActiveUIParam)
 			RespawnUI->ActiveCounter(TimeWaitRespawn);
@@ -72,8 +100,6 @@ void URespawnComponent::ChangeUI(bool ActiveUIParam)
 			RespawnUI->FinishCounter();
 	}
 }
-
-
 
 
 // Called when the game starts
@@ -86,7 +112,7 @@ void URespawnComponent::BeginPlay()
 		Owner->Respawn = this;
 		Unit = Owner;
 	}
-	
+	ChangeUI(true);
 }
 
 
