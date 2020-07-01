@@ -19,9 +19,6 @@ public:
 	// Sets default values for this component's properties
 	URespawnComponent();
 
-	UFUNCTION()
-	void ChangeUI(bool ActiveUIParam);
-
 	UFUNCTION(NetMulticast, Reliable)
 	void RespawnNetMulticastRPC(AUnit* UnitParam);
 
