@@ -66,7 +66,13 @@ void AMagicWarGameMode::CheckWin()
 
 			if (Character)
 			{
-				if (Character->Points && Record < Character->Points->TotalPoints())
+				UPointsComponent* PointsComponent = Character->Points;
+
+				if (!PointsComponent)
+					PointsComponent = Cast<UPointsComponent>(Character->GetComponentByClass(UPointsComponent::StaticClass()));
+
+				UE_LOG(LogTemp, Warning, TEXT("000 POINTSSS, %d"), PointsComponent->TotalPoints());
+				if (PointsComponent && Record < PointsComponent->TotalPoints())
 					Record = Character->Points->TotalPoints();
 			}
 		}
@@ -77,8 +83,6 @@ void AMagicWarGameMode::CheckWin()
 
 			if (Character)
 			{
-				FString NameCharacter = Character->GetName();
-				UE_LOG(LogTemp, Warning, TEXT("000 WIN, %s"));
 				Character->WinNetMulticastRPC(Record);
 			}
 		}
