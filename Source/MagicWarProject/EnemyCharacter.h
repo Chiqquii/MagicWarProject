@@ -21,6 +21,9 @@ public:
 	UFUNCTION(Server, Reliable)
 		void ServerShootRPC(AEnemyCharacter* CurrentEnemy);
 
+	UFUNCTION(NetMulticast, Reliable)
+		void NetMulticastShootRPC();
+
 	UFUNCTION(Server, Reliable)
 		void GetTargetServerRPC();
 

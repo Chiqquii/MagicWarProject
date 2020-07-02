@@ -136,5 +136,13 @@ void AEnemyCharacter::GetTargetServerRPC_Implementation()
 void AEnemyCharacter::ServerShootRPC_Implementation(AEnemyCharacter* CurrentEnemy)
 {
 	CurrentEnemy->Weapon->FireActor(CurrentEnemy);
+	NetMulticastShootRPC();
 }
+
+void AEnemyCharacter::NetMulticastShootRPC_Implementation()
+{
+	ViewAttack();
+}
+
+
 
