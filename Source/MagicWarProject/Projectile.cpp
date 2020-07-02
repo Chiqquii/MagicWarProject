@@ -53,6 +53,11 @@ void AProjectile::DestroyBullet()
 
 void AProjectile::HitBullet(UPrimitiveComponent* OverlappedComp, AActor* OtherActor) 
 {
+	if (Cast<AUnit>(OtherActor) && Cast<AUnit>(OtherActor)->DeathUnit) 
+	{
+		DestroyBullet();
+		return;
+	}
 
 	auto damageable = OtherActor->FindComponentByClass<UDamageableComponent>();
 
