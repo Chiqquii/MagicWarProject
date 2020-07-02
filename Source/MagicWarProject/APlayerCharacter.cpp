@@ -31,7 +31,9 @@ void AAPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
 	DECLARE_DELEGATE_OneParam(CallShoot, AAPlayerCharacter*);
+	DECLARE_DELEGATE_OneParam(CallDance, AAPlayerCharacter*);
 	PlayerInputComponent->BindAction<CallShoot>("Fire", IE_Pressed, this, &AAPlayerCharacter::CallShoot, this);
+	PlayerInputComponent->BindAction<CallDance>("Dance", IE_Pressed, this, &AAPlayerCharacter::CallDance, this);
 
 	PlayerInputComponent->BindAxis("MoveForward", this, &AAPlayerCharacter::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &AAPlayerCharacter::MoveRight);
@@ -47,10 +49,25 @@ void AAPlayerCharacter::CallShoot(AAPlayerCharacter* Character)
 	ServerShoot(Character);
 }
 
+void AAPlayerCharacter::CallDance(AAPlayerCharacter* Character)
+{
+	if (DeathUnit)
+		return;
+
+	ServerDance(Character);
+}
+
 void AAPlayerCharacter::Shoot(AAPlayerCharacter* Character)
 {
 	Character->CurrentWeapon->Fire(Character);
 	NetMulticastShoot();
+}
+
+void AAPlayerCharacter::Dance(AAPlayerCharacter* Character)
+{
+	int DanceRandom = FMath::RandRange(0, CountDances);
+
+	NetMulticastDance(DanceRandom);
 }
 
 void AAPlayerCharacter::MoveForward(float Axis)
@@ -77,6 +94,16 @@ void AAPlayerCharacter::CameraRotation(float Axis)
 void AAPlayerCharacter::ServerShoot_Implementation(AAPlayerCharacter* Character)
 {
 	Shoot(Character);
+}
+
+void AAPlayerCharacter::ServerDance_Implementation(AAPlayerCharacter* Character)
+{
+	Dance(Character);
+}
+
+void AAPlayerCharacter::NetMulticastDance_Implementation(int DanceParam)
+{
+	ViewDance(DanceParam);
 }
 
 void AAPlayerCharacter::NetMulticastShoot_Implementation()

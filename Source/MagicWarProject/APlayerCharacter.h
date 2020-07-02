@@ -24,8 +24,14 @@ public:
 	UFUNCTION(Server, Reliable)
 		void ServerShoot(AAPlayerCharacter* Character);
 
+	UFUNCTION(Server, Reliable)
+		void ServerDance(AAPlayerCharacter* Character);
+
 	UFUNCTION(NetMulticast, Reliable)
 		void NetMulticastShoot();
+
+	UFUNCTION(NetMulticast, Reliable)
+		void NetMulticastDance(int DanceParam);
 
 	UFUNCTION(NetMulticast, Reliable)
 		void WinNetMulticastRPC(int Record);
@@ -43,6 +49,9 @@ protected:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		class AWeaponMagic* CurrentWeapon;
 
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		int CountDances;
+
 public:
 
 	// Called every frame
@@ -52,13 +61,18 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	void CallShoot(AAPlayerCharacter* Character);
+	void CallDance(AAPlayerCharacter* Character);
 	void Shoot(AAPlayerCharacter* Character);
+	void Dance(AAPlayerCharacter* Character);
 	void MoveForward(float Axis);
 	void MoveRight(float Axis);
 	void CameraRotation(float Axis);
 
 	UFUNCTION(BlueprintImplementableEvent)
 	void ViewAttack();
+
+	UFUNCTION(BlueprintImplementableEvent)
+		void ViewDance(int DanceParam);
 
 	UFUNCTION(BlueprintImplementableEvent)
 		void ViewGameOver();

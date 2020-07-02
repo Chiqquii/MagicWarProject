@@ -16,9 +16,12 @@ class MAGICWARPROJECT_API URespawnUI : public UUUiUserWidget
 	
 public:
 
-	UFUNCTION(BlueprintImplementableEvent, Category = "Settings")
+	UFUNCTION(BlueprintImplementableEvent)
 		void ActiveCounter(float MaxTimeParam);
 
-	UFUNCTION(BlueprintImplementableEvent, Category = "Settings")
+	UFUNCTION(BlueprintImplementableEvent)
 		void FinishCounter();
+
+	UFUNCTION(BlueprintImplementableEvent)
+		void RemainingComebacks(int ComebacksParam);
 };

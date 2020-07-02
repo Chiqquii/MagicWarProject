@@ -56,6 +56,8 @@ void URespawnComponent::CheckRespawn()
 	FTimerHandle TimerHandle;
 	GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &URespawnComponent::FinishRespawn, TimeWaitRespawn, false);
 	ActiveRespawnNetMulticastRPC(Unit);
+	if (RespawnUI)
+		RespawnUI->RemainingComebacks(MaxRespawn - CounterRespawn);
 }
 
 void URespawnComponent::DeathUnitServerRPC_Implementation(AUnit* UnitParam)
@@ -83,6 +85,9 @@ void URespawnComponent::BeginPlay()
 		Owner->Respawn = this;
 		Unit = Owner;
 	}
+
+	if (RespawnUI)
+		RespawnUI->RemainingComebacks(MaxRespawn - CounterRespawn);
 }
 
 
