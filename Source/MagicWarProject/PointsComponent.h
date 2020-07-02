@@ -37,6 +37,9 @@ public:
 	int PointsToGive;
 
 	UFUNCTION(BlueprintCallable)
+	int TotalPoints();
+
+	UFUNCTION(BlueprintCallable)
 	void AddPoints(int Point);
 
 	UFUNCTION(BlueprintImplementableEvent)

@@ -4,11 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
-#include "RespawnComponent.h"
+#include "Unit.h"
+#include "APlayerCharacter.h"
+#include "EnemyCharacter.h"
+#include "Net/UnrealNetwork.h"
 #include "MagicWarGameMode.generated.h"
-
-
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnActorKilled);
 
 UCLASS()
 class MAGICWARPROJECT_API AMagicWarGameMode : public AGameModeBase
@@ -18,9 +18,24 @@ class MAGICWARPROJECT_API AMagicWarGameMode : public AGameModeBase
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		float Time;
+
+	UPROPERTY()
+		bool FinishGame;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Array")
+	TArray<AAPlayerCharacter*> PlayersDeath;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Array")
+	TArray<AEnemyCharacter*> EnemiesDeath;
+
+	UFUNCTION()
+		void CheckGameOver();
+
+	UFUNCTION()
+		void CheckWin();
 	
 public:
 
-	UPROPERTY(BlueprintAssignable)
-	FOnActorKilled OnActorKilled;
+	UFUNCTION()
+		void CallKillUnit(AUnit* UnitDeath);
 };

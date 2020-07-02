@@ -52,9 +52,6 @@ void UDamageableComponent::Damage(float damage)
 {
 	if (Unit && Unit->DeathUnit) return;
 
-	FString fstringVar = Unit->GetName();
-	UE_LOG(LogTemp, Warning, TEXT("000 UNIT DAMAGE, %s"), *fstringVar);
-
 	Health -= damage;
 
 	if (Health <= 0)
@@ -67,9 +64,6 @@ void UDamageableComponent::Damage(float damage)
 
 void UDamageableComponent::Kill()
 {
-	FString fstringVar = Unit->GetName();
-	UE_LOG(LogTemp, Warning, TEXT("000 Text, %s"), *fstringVar);
-
 	if (Unit) {
 		Unit->DeathUnit = true;
 		DeathServerRPC(Unit);
@@ -79,8 +73,6 @@ void UDamageableComponent::Kill()
 
 void UDamageableComponent::DeathServerRPC_Implementation(AUnit* UnitParam)
 {
-	UE_LOG(LogTemp, Warning, TEXT("000 KILL"));
-
 	if (UnitParam->Respawn)
 		UnitParam->Respawn->CheckRespawn();
 }
@@ -94,11 +86,6 @@ void UDamageableComponent::DeathNetMulticastRPC_Implementation(AUnit* UnitParam)
 void UDamageableComponent::ResetLife()
 {
 	Health += MaxHealth;
-
-	if (Unit) {
-		FString fstringVar = Unit->GetName();
-		UE_LOG(LogTemp, Warning, TEXT("000 RESET LIFE, %s %d"), *fstringVar, Health);
-	}
 
 	if(Unit)
 		Unit->DeathUnit = false;

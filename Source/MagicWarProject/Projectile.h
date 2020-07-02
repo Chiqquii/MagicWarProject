@@ -20,9 +20,6 @@ public:
 	// Sets default values for this actor's properties
 	AProjectile();
 
-	UFUNCTION(Server, Reliable)
-		void HitDamageServerRPC(float HitDamage, UDamageableComponent* HitDamageable);
-
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

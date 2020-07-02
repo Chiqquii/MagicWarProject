@@ -4,6 +4,7 @@
 #include "RespawnComponent.h"
 #include "TimerManager.h"
 #include "RespawnUI.h"
+#include "MagicWarGameMode.h"
 // Sets default values for this component's properties
 URespawnComponent::URespawnComponent()
 {
@@ -44,21 +45,28 @@ void URespawnComponent::ActiveRespawnNetMulticastRPC_Implementation(AUnit* UnitP
 
 void URespawnComponent::CheckRespawn()
 {
-	if (CounterRespawn >= MaxRespawn) 
+	if (CounterRespawn >= MaxRespawn)
+	{
+		DeathUnitServerRPC(Unit);
 		return;
+	}
 
 	CounterRespawn++;
 
 	FTimerHandle TimerHandle;
 	GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &URespawnComponent::FinishRespawn, TimeWaitRespawn, false);
 	ActiveRespawnNetMulticastRPC(Unit);
-// 	if (RespawnUI) 
-// 	{
-// 		FString fstringVar = Unit->GetName();
-// 		UE_LOG(LogTemp, Warning, TEXT("000 ACTIVE COUNTER UI, %s"), *fstringVar);
-// 		RespawnUI->ActiveCounter(TimeWaitRespawn);
-// 	}
 }
+
+void URespawnComponent::DeathUnitServerRPC_Implementation(AUnit* UnitParam)
+{
+	AMagicWarGameMode* GM = Cast<AMagicWarGameMode>(GetWorld()->GetAuthGameMode());
+
+	if (GM)
+		GM->CallKillUnit(UnitParam);
+}
+
+
 
 void URespawnComponent::FinishRespawn()
 {

@@ -15,7 +15,6 @@ UPointsComponent::UPointsComponent()
 	// ...
 }
 
-
 // Called when the game starts
 void UPointsComponent::BeginPlay()
 {
@@ -44,6 +43,11 @@ void UPointsComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Out
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME(UPointsComponent, Points);
+}
+
+int UPointsComponent::TotalPoints()
+{
+	return Points;
 }
 
 void UPointsComponent::AddPoints(int Point)

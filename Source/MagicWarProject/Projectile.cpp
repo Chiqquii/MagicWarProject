@@ -56,11 +56,6 @@ void AProjectile::HitBullet(UPrimitiveComponent* OverlappedComp, AActor* OtherAc
 
 	auto damageable = OtherActor->FindComponentByClass<UDamageableComponent>();
 
-	if (damageable)
-		damageable->Damage(Damage);
-		//HitDamageServerRPC(Damage, damageable);
-
-
 	if (Character && Character->Points)
 	{
 		auto points = OtherActor->FindComponentByClass<UPointsComponent>();
@@ -71,14 +66,10 @@ void AProjectile::HitBullet(UPrimitiveComponent* OverlappedComp, AActor* OtherAc
 		}
 	}
 
+	if (damageable)
+		damageable->Damage(Damage);
 
 	DestroyBullet();
 }
 
-void AProjectile::HitDamageServerRPC_Implementation(float HitDamage, UDamageableComponent* HitDamageable)
-{
-	FString fstringVar = HitDamageable->GetOwner()->GetName();
-	UE_LOG(LogTemp, Warning, TEXT("000 HIT DAMAGE, %s"), *fstringVar);
-	HitDamageable->Damage(HitDamage);
-}
 

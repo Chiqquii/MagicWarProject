@@ -2,6 +2,7 @@
 
 
 #include "APlayerCharacter.h"
+#include "MagicWarGameMode.h"
 
 // Sets default values
 AAPlayerCharacter::AAPlayerCharacter()
@@ -14,12 +15,7 @@ AAPlayerCharacter::AAPlayerCharacter()
 void AAPlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-
-// 	if (skins.Num() > 0) 
-// 	{
-// 		auto randomSkin = FMath::RandRange(0, skins.Num());
-// 		GetMesh()->SetSkeletalMesh(skins[randomSkin]);
-// 	}
+  
 }
 
 // Called every frame
@@ -87,3 +83,15 @@ void AAPlayerCharacter::NetMulticastShoot_Implementation()
 {
 	ViewAttack();
 }
+
+void AAPlayerCharacter::WinNetMulticastRPC_Implementation(int Record)
+{
+	ViewWin(Record);
+}
+
+void AAPlayerCharacter::GameOverNetMulticastRPC_Implementation()
+{
+	ViewGameOver();
+}
+
+

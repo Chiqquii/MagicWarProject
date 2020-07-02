@@ -27,6 +27,12 @@ public:
 	UFUNCTION(NetMulticast, Reliable)
 		void NetMulticastShoot();
 
+	UFUNCTION(NetMulticast, Reliable)
+		void WinNetMulticastRPC(int Record);
+
+	UFUNCTION(NetMulticast, Reliable)
+		void GameOverNetMulticastRPC();
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -53,4 +59,10 @@ public:
 
 	UFUNCTION(BlueprintImplementableEvent)
 	void ViewAttack();
+
+	UFUNCTION(BlueprintImplementableEvent)
+		void ViewGameOver();
+
+	UFUNCTION(BlueprintImplementableEvent)
+		void ViewWin(int Record);
 };

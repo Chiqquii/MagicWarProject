@@ -19,6 +19,9 @@ public:
 	// Sets default values for this component's properties
 	URespawnComponent();
 
+	UFUNCTION(Server, Reliable)
+		void DeathUnitServerRPC(AUnit* UnitParam);
+
 	UFUNCTION(NetMulticast, Reliable)
 	void RespawnNetMulticastRPC(AUnit* UnitParam);
 
